@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Form</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
+    <header>
+        <h1>Submission Form</h1>
+    </header>
+    <main>
+        <form action="/submission" method="POST">
+            <div>
+                <label for="date">Date:</label>
+                <input type="datetime-local" id="date" name="date" value="<%= new Date().toISOString().slice(0, 16) %>" required>
+            </div>
+            <div>
+                <label for="type">Type of Submission:</label>
+                <select id="type" name="type" required>
+                    <option value="Task">Task</option>
+                    <option value="Project">Project</option>
+                    <option value="Assistance">Assistance</option>
+                </select>
+            </div>
+            <div>
+                <label for="shortDescription">Short Description:</label>
+                <input type="text" id="shortDescription" name="shortDescription" required>
+            </div>
+            <div>
+                <label for="additionalInfo">Additional Information:</label>
+                <textarea id="additionalInfo" name="additionalInfo" rows="4" required></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Node.js Website</p>
+    </footer>
+</body>
+</html>

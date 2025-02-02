@@ -70,6 +70,25 @@ router.get('/logout', (req, res) => {
     });
 });
 
+router.get('/submission', (req, res) => {
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/login');
+    }
+    res.render('submission', { isLoggedIn: req.session.isLoggedIn });
+});
+
+router.post('/submission', async (req, res) => {
+    const { date, type, shortDescription, additionalInfo } = req.body;
+
+    try {
+        await db.query('INSERT INTO submissions (date, type, short_description, additional_info) VALUES ($1, $2, $3, $4)', [date, type, shortDescription, additionalInfo]);
+        res.redirect('/');
+    } catch (err) {
+        console.error('Error inserting into the database:', err.stack);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports = (app) => {
     app.use('/', router);
 };

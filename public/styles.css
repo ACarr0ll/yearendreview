@@ -101,7 +101,7 @@ form label {
     margin-bottom: 5px;
 }
 
-form input {
+form input, form select, form textarea {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
