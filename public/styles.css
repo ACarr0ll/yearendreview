@@ -166,6 +166,21 @@ form button:hover {
     margin-top: 0;
 }
 
+.delete-button {
+    background-color: #e74c3c; /* Red for delete button background */
+    color: white; /* Ensure text color is white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Match border radius */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 16px; /* Match font size */
+    padding: 10px; /* Match padding */
+    margin-top: 10px; /* Add margin to separate from other content */
+}
+
+.delete-button:hover {
+    background-color: #c0392b; /* Darker red for hover */
+}
+
 .error {
     color: #e74c3c; /* Red for error text */
     margin-bottom: 20px;

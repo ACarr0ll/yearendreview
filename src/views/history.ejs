@@ -19,6 +19,12 @@
                     <p><strong>Date:</strong> <%= new Date(submission.date).toLocaleString() %></p>
                     <p><strong>Short Description:</strong> <%= submission.short_description %></p>
                     <p><strong>Additional Information:</strong> <%= submission.additional_info %></p>
+                    <% if (isAdmin) { %>
+                        <form action="/delete-submission" method="POST">
+                            <input type="hidden" name="id" value="<%= submission.id %>">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             <% }) %>
         </div>

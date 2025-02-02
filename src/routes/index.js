@@ -25,6 +25,7 @@ router.post('/login', async (req, res) => {
             if (isMatch) {
                 req.session.isLoggedIn = true;
                 req.session.username = username; // Store the username in the session
+                req.session.isAdmin = user.is_admin; // Store the admin status in the session
                 res.redirect('/');
             } else {
                 res.render('login', { error: 'Incorrect username or password', isLoggedIn: req.session.isLoggedIn });
@@ -100,9 +101,25 @@ router.get('/history', async (req, res) => {
 
     try {
         const result = await db.query('SELECT * FROM submissions WHERE username = $1 ORDER BY date DESC', [username]);
-        res.render('history', { isLoggedIn: req.session.isLoggedIn, submissions: result.rows });
+        res.render('history', { isLoggedIn: req.session.isLoggedIn, isAdmin: req.session.isAdmin, submissions: result.rows });
     } catch (err) {
         console.error('Error querying the database:', err.stack);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/delete-submission', async (req, res) => {
+    if (!req.session.isAdmin) {
+        return res.status(403).send('Forbidden');
+    }
+
+    const { id } = req.body;
+
+    try {
+        await db.query('DELETE FROM submissions WHERE id = $1', [id]);
+        res.redirect('/history');
+    } catch (err) {
+        console.error('Error deleting from the database:', err.stack);
         res.status(500).send('Internal Server Error');
     }
 });
