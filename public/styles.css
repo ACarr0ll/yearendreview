@@ -131,6 +131,8 @@ footer {
     padding: 5px; /* Make the footer smaller */
     width: 100%;
     font-size: 12px; /* Smaller font size for the footer */
+    position: fixed; /* Keep the footer fixed at the bottom */
+    bottom: 0; /* Align the footer to the bottom */
 }
 
 /* Notification Styles */
