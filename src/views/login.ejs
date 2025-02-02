@@ -8,8 +8,10 @@
 </head>
 <body>
     <%- include('partials/_navbar') %>
-    <div>
+    <header>
         <h1>Login</h1>
+    </header>
+    <main>
         <form action="/login" method="POST">
             <div>
                 <label for="username">Username:</label>
@@ -24,6 +26,9 @@
         <div>
             <p>Don't have an account? <a href="/register">Register</a></p>
         </div>
-    </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Node.js Website</p>
+    </footer>
 </body>
 </html>
