@@ -12,6 +12,9 @@
         <h1>Login</h1>
     </header>
     <main>
+        <% if (typeof error !== 'undefined') { %>
+            <div class="error"><%= error %></div>
+        <% } %>
         <form action="/login" method="POST">
             <div>
                 <label for="username">Username:</label>

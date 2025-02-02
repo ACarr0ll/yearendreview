@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login',{ isLoggedIn: req.session.isLoggedIn });
+    res.render('login');
 });
 
 router.post('/login', async (req, res) => {
@@ -24,10 +24,10 @@ router.post('/login', async (req, res) => {
                 req.session.isLoggedIn = true;
                 res.redirect('/');
             } else {
-                res.send('Incorrect password');
+                res.render('login', { error: 'Incorrect username or password', isLoggedIn: req.session.isLoggedIn });
             }
         } else {
-            res.send('User not found');
+            res.render('login', { error: 'Incorrect username or password', isLoggedIn: req.session.isLoggedIn });
         }
     } catch (err) {
         console.error('Error querying the database:', err.stack);
@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('register',{ isLoggedIn: req.session.isLoggedIn });
+    res.render('register', { isLoggedIn: req.session.isLoggedIn });
 });
 
 router.post('/register', async (req, res) => {
