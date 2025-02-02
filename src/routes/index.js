@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login',{ isLoggedIn: req.session.isLoggedIn });
 });
 
 router.post('/login', async (req, res) => {
@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.render('register',{ isLoggedIn: req.session.isLoggedIn });
 });
 
 router.post('/register', async (req, res) => {
