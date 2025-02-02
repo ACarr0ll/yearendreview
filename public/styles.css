@@ -176,7 +176,7 @@ form button:hover {
     font-size: 16px; /* Match font size */
     padding: 10px; /* Match padding */
     margin-top: 10px; /* Add margin to separate from other content */
-    width: 100%; /* Make the button full width */
+    width: calc(100% - 40px); /* Make the button fit within the card's padding */
     position: absolute; /* Position the button within the card */
     bottom: 20px; /* Position the button at the bottom of the card */
     left: 20px; /* Align the button with the card's padding */
