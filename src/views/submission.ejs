@@ -15,7 +15,7 @@
         <form action="/submission" method="POST">
             <div>
                 <label for="date">Date:</label>
-                <input type="datetime-local" id="date" name="date" value="<%= new Date().toISOString().slice(0, 16) %>" required>
+                <input type="datetime-local" id="date" name="date" required>
             </div>
             <div>
                 <label for="type">Type of Submission:</label>
@@ -39,5 +39,14 @@
     <footer>
         <p>&copy; 2023 My Node.js Website</p>
     </footer>
+    <script>
+        // Set the date input field to the current date and time in the user's local time zone
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const dateInput = document.getElementById('date');
+            const now = new Date();
+            const localDateTime = now.toISOString().slice(0, 16);
+            dateInput.value = localDateTime;
+        });
+    </script>
 </body>
 </html>
