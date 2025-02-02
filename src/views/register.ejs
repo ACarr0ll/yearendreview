@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <%- include('partials/_navbar') %>
+    <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
     <header>
         <h1>Register</h1>
     </header>
     <main>
-        <form action="/register" method="POST">
+        <% if (typeof error !== 'undefined') { %>
+            <div class="error"><%= error %></div>
+        <% } %>
+        <form id="registerForm" action="/register" method="POST">
             <div>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -20,6 +23,7 @@
             <div>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
+                <small>Password must be at least 10 characters long and include at least 1 number, 1 uppercase letter, and 1 symbol.</small>
             </div>
             <button type="submit">Register</button>
         </form>
@@ -27,5 +31,16 @@
     <footer>
         <p>&copy; 2023 My Node.js Website</p>
     </footer>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/;
+
+            if (!passwordPattern.test(password)) {
+                event.preventDefault();
+                alert('Password must be at least 10 characters long and include at least 1 number, 1 uppercase letter, and 1 symbol.');
+            }
+        });
+    </script>
 </body>
 </html>

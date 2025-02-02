@@ -44,6 +44,11 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const lowerCaseUsername = username.toLowerCase();
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/;
+
+    if (!passwordPattern.test(password)) {
+        return res.render('register', { error: 'Password must be at least 10 characters long and include at least 1 number, 1 uppercase letter, and 1 symbol.', isLoggedIn: req.session.isLoggedIn });
+    }
 
     try {
         const hash = await bcrypt.hash(password, 10);
