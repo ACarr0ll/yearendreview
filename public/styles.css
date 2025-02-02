@@ -47,7 +47,7 @@ nav .logo {
 }
 
 header {
-    color: white;
+    color: black; /* Set header font color to black */
     padding: 20px;
     text-align: center;
 }
