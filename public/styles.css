@@ -90,6 +90,8 @@ form {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    width: 90%; /* Default width for mobile devices */
+    max-width: 600px; /* Maximum width for larger displays */
 }
 
 form div {
@@ -183,5 +185,12 @@ footer {
     form {
         width: 90%;
         margin: 20px auto;
+    }
+}
+
+@media (min-width: 769px) {
+    form {
+        width: 60%; /* Increase width for larger displays */
+        max-width: 800px; /* Maximum width for larger displays */
     }
 }
