@@ -3,26 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Node.js Website</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li class="logo">MyLogo</li>
-            <li><a href="/new-submission">New Submission</a></li>
-            <li><a href="/view-history">View History</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <header>
-        <h1>Welcome to My Node.js Website</h1>
-    </header>
-    <main>
-        <p>This is the homepage of your Node.js website built with EJS.</p>
-    </main>
-    <footer>
-        <p>&copy; 2023 My Node.js Website</p>
-    </footer>
+    <%- include('partials/_navbar') %>
+    <div>
+        <h1>HomePage</h1>
+    </div>
 </body>
 </html>
