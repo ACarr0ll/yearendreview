@@ -98,10 +98,12 @@ router.get('/history', async (req, res) => {
     }
 
     const username = req.session.username;
+    const successMessage = req.session.successMessage;
+    delete req.session.successMessage; // Clear the success message after displaying it
 
     try {
         const result = await db.query('SELECT * FROM submissions WHERE username = $1 ORDER BY date DESC', [username]);
-        res.render('history', { isLoggedIn: req.session.isLoggedIn, isAdmin: req.session.isAdmin, submissions: result.rows });
+        res.render('history', { isLoggedIn: req.session.isLoggedIn, isAdmin: req.session.isAdmin, submissions: result.rows, successMessage });
     } catch (err) {
         console.error('Error querying the database:', err.stack);
         res.status(500).send('Internal Server Error');
@@ -117,6 +119,7 @@ router.post('/delete-submission', async (req, res) => {
 
     try {
         await db.query('DELETE FROM submissions WHERE id = $1', [id]);
+        req.session.successMessage = 'Submission deleted successfully!';
         res.redirect('/history');
     } catch (err) {
         console.error('Error deleting from the database:', err.stack);

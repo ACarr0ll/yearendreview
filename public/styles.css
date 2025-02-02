@@ -181,13 +181,13 @@ form button:hover {
     background-color: #c0392b; /* Darker red for hover */
 }
 
-.error {
-    color: #e74c3c; /* Red for error text */
+.success {
+    color: #2ecc71; /* Green for success text */
     margin-bottom: 20px;
 }
 
-.success {
-    color: #2ecc71; /* Green for success text */
+.error {
+    color: #e74c3c; /* Red for error text */
     margin-bottom: 20px;
 }
 

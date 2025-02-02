@@ -12,6 +12,9 @@
         <h1>Submission History</h1>
     </header>
     <main>
+        <% if (successMessage) { %>
+            <div class="success"><%= successMessage %></div>
+        <% } %>
         <div class="card-container">
             <% submissions.forEach(submission => { %>
                 <div class="card">
@@ -20,7 +23,7 @@
                     <p><strong>Short Description:</strong> <%= submission.short_description %></p>
                     <p><strong>Additional Information:</strong> <%= submission.additional_info %></p>
                     <% if (isAdmin) { %>
-                        <form action="/delete-submission" method="POST">
+                        <form action="/delete-submission" method="POST" onsubmit="return confirm('Are you sure you want to delete this submission?');">
                             <input type="hidden" name="id" value="<%= submission.id %>">
                             <button type="submit" class="delete-button">Delete</button>
                         </form>
