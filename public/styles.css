@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     color: black; /* Set text color to black for better contrast */
+    text-align: center; /* Center all text */
 }
 
 nav {
@@ -59,6 +60,18 @@ header h1 {
 
 main {
     padding: 20px;
+}
+
+.feature-box {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    vertical-align: top;
 }
 
 footer {
