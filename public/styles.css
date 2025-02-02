@@ -145,6 +145,27 @@ form button:hover {
     background-color: #c0392b; /* Darker red for hover */
 }
 
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 300px;
+    text-align: left;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
 .error {
     color: #e74c3c; /* Red for error text */
     margin-bottom: 20px;

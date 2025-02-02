@@ -89,6 +89,20 @@ router.post('/submission', async (req, res) => {
     }
 });
 
+router.get('/history', async (req, res) => {
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/login');
+    }
+
+    try {
+        const result = await db.query('SELECT * FROM submissions ORDER BY date DESC');
+        res.render('history', { isLoggedIn: req.session.isLoggedIn, submissions: result.rows });
+    } catch (err) {
+        console.error('Error querying the database:', err.stack);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports = (app) => {
     app.use('/', router);
 };

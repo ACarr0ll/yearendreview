@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission History</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
+    <header>
+        <h1>Submission History</h1>
+    </header>
+    <main>
+        <div class="card-container">
+            <% submissions.forEach(submission => { %>
+                <div class="card">
+                    <h2><%= submission.type %></h2>
+                    <p><strong>Date:</strong> <%= new Date(submission.date).toLocaleString() %></p>
+                    <p><strong>Short Description:</strong> <%= submission.short_description %></p>
+                    <p><strong>Additional Information:</strong> <%= submission.additional_info %></p>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Node.js Website</p>
+    </footer>
+</body>
+</html>
