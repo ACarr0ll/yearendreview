@@ -133,6 +133,12 @@ form button:hover {
 
 .cancel-button {
     background-color: #e74c3c; /* Red for cancel button background */
+    color: white; /* Ensure text color is white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Match border radius */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 16px; /* Match font size */
+    padding: 10px; /* Match padding */
 }
 
 .cancel-button:hover {
