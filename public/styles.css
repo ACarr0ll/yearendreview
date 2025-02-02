@@ -146,9 +146,9 @@ footer {
     }
 
     .feature-box {
-        width: 100%;
+        width: calc(100% - 40px); /* Adjust width to fit within the screen */
         height: auto;
-        margin: 10px 0;
+        margin: 10px auto; /* Center the boxes horizontally */
     }
 
     form {
