@@ -12,6 +12,9 @@
         <h1>Login</h1>
     </header>
     <main>
+        <% if (typeof successMessage !== 'undefined') { %>
+            <div class="success"><%= successMessage %></div>
+        <% } %>
         <% if (typeof error !== 'undefined') { %>
             <div class="error"><%= error %></div>
         <% } %>

@@ -8,7 +8,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login', { isLoggedIn: req.session.isLoggedIn });
+    const successMessage = req.session.successMessage;
+    delete req.session.successMessage; // Clear the success message after displaying it
+    res.render('login', { isLoggedIn: req.session.isLoggedIn, successMessage });
 });
 
 router.post('/login', async (req, res) => {
@@ -46,6 +48,7 @@ router.post('/register', async (req, res) => {
     try {
         const hash = await bcrypt.hash(password, 10);
         await db.query('INSERT INTO users (username, password) VALUES ($1, $2)', [lowerCaseUsername, hash]);
+        req.session.successMessage = 'Registration successful! Please log in.';
         res.redirect('/login');
     } catch (err) {
         console.error('Error inserting into the database:', err.stack);

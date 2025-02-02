@@ -129,6 +129,11 @@ form button:hover {
     margin-bottom: 20px;
 }
 
+.success {
+    color: #2ecc71; /* Green for success text */
+    margin-bottom: 20px;
+}
+
 footer {
     background-color: #3498db; /* Blue for footer background */
     color: white;
