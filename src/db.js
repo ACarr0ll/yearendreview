@@ -1,9 +1,15 @@
 require('dotenv').config();
-const mysql = require('mysql');
+const { Pool } = require('pg');
 
-const connection = mysql.createConnection(process.env.MYSQL_URL);
+const pool = new Pool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+});
 
-connection.connect((err) => {
+pool.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err.stack);
         return;
@@ -11,4 +17,4 @@ connection.connect((err) => {
     console.log('Connected to the database.');
 });
 
-module.exports = connection;
+module.exports = pool;
