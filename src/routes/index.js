@@ -8,14 +8,15 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login', { isLoggedIn: req.session.isLoggedIn });
+    res.render('login');
 });
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    const lowerCaseUsername = username.toLowerCase();
 
     try {
-        const result = await db.query('SELECT * FROM users WHERE username = $1', [username]);
+        const result = await db.query('SELECT * FROM users WHERE LOWER(username) = $1', [lowerCaseUsername]);
         if (result.rows.length > 0) {
             const user = result.rows[0];
             const isMatch = await bcrypt.compare(password, user.password);
@@ -35,15 +36,16 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('register' , { isLoggedIn: req.session.isLoggedIn });
+    res.render('register');
 });
 
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
+    const lowerCaseUsername = username.toLowerCase();
 
     try {
         const hash = await bcrypt.hash(password, 10);
-        await db.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, hash]);
+        await db.query('INSERT INTO users (username, password) VALUES ($1, $2)', [lowerCaseUsername, hash]);
         res.redirect('/login');
     } catch (err) {
         console.error('Error inserting into the database:', err.stack);
