@@ -175,6 +175,7 @@ form button:hover {
     font-size: 16px; /* Match font size */
     padding: 10px; /* Match padding */
     margin-top: 10px; /* Add margin to separate from other content */
+    width: 100%; /* Make the button full width */
 }
 
 .delete-button:hover {
