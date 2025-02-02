@@ -4,7 +4,7 @@ const db = require('../db');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { isLoggedIn: req.session.isLoggedIn });
 });
 
 router.get('/login', (req, res) => {
@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
             const user = result.rows[0];
             const isMatch = await bcrypt.compare(password, user.password);
             if (isMatch) {
-                // Set session or token here if using authentication
+                req.session.isLoggedIn = true;
                 res.redirect('/');
             } else {
                 res.send('Incorrect password');
@@ -49,6 +49,15 @@ router.post('/register', async (req, res) => {
         console.error('Error inserting into the database:', err.stack);
         res.status(500).send('Internal Server Error');
     }
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect('/');
+    });
 });
 
 module.exports = (app) => {
