@@ -70,8 +70,14 @@ main {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    vertical-align: top;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add drop shadow */
+    background-color: #fff; /* Add background color */
+    transition: transform 0.3s, box-shadow 0.3s; /* Add transition for hover effect */
+}
+
+.feature-box:hover {
+    transform: translateY(-10px); /* Lift the box on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Intensify the shadow on hover */
 }
 
 form {
