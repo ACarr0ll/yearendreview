@@ -86,9 +86,6 @@ form {
     text-align: left;
     background-color: #fff; /* White for form background */
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     width: 90%; /* Default width for mobile devices */
     max-width: 600px; /* Maximum width for larger displays */
