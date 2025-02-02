@@ -2,12 +2,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    color: black; /* Set text color to black for better contrast */
+    color: #2c3e50; /* Dark Gray for text */
+    background-color: #ecf0f1; /* Light Gray for background */
     text-align: center; /* Center all text */
 }
 
 nav {
-    background-color: #333;
+    background-color: #3498db; /* Blue for nav background */
     overflow: hidden;
     display: flex;
     justify-content: space-between;
@@ -37,7 +38,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #111;
+    background-color: #2980b9; /* Darker Blue for hover */
 }
 
 nav .logo {
@@ -48,7 +49,7 @@ nav .logo {
 }
 
 header {
-    color: black; /* Set header font color to black */
+    color: #2c3e50; /* Dark Gray for header text */
     padding: 20px;
     text-align: center;
 }
@@ -71,7 +72,7 @@ main {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add drop shadow */
-    background-color: #fff; /* Add background color */
+    background-color: #fff; /* White for background */
     transition: transform 0.3s, box-shadow 0.3s; /* Add transition for hover effect */
 }
 
@@ -83,7 +84,7 @@ main {
 form {
     display: inline-block;
     text-align: left;
-    background-color: #f9f9f9;
+    background-color: #fff; /* White for form background */
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -111,7 +112,7 @@ form input {
 form button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #2ecc71; /* Green for button background */
     color: white;
     border: none;
     border-radius: 5px;
@@ -120,17 +121,16 @@ form button {
 }
 
 form button:hover {
-    background-color: #45a049;
+    background-color: #27ae60; /* Darker Green for hover */
 }
 
 footer {
-    background-color: #333;
+    background-color: #3498db; /* Blue for footer background */
     color: white;
     text-align: center;
     padding: 5px; /* Make the footer smaller */
     width: 100%;
     font-size: 12px; /* Smaller font size for the footer */
-    display: none; /* Initially hide the footer */
 }
 
 /* Notification Styles */
@@ -138,7 +138,7 @@ footer {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #4CAF50;
+    background-color: #e74c3c; /* Red for notification background */
     color: white;
     padding: 10px;
     border-radius: 5px;
