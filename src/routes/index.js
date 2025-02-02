@@ -24,6 +24,7 @@ router.post('/login', async (req, res) => {
             const isMatch = await bcrypt.compare(password, user.password);
             if (isMatch) {
                 req.session.isLoggedIn = true;
+                req.session.username = username; // Store the username in the session
                 res.redirect('/');
             } else {
                 res.render('login', { error: 'Incorrect username or password', isLoggedIn: req.session.isLoggedIn });
@@ -79,9 +80,10 @@ router.get('/submission', (req, res) => {
 
 router.post('/submission', async (req, res) => {
     const { date, type, shortDescription, additionalInfo } = req.body;
+    const username = req.session.username;
 
     try {
-        await db.query('INSERT INTO submissions (date, type, short_description, additional_info) VALUES ($1, $2, $3, $4)', [date, type, shortDescription, additionalInfo]);
+        await db.query('INSERT INTO submissions (date, type, short_description, additional_info, username) VALUES ($1, $2, $3, $4, $5)', [date, type, shortDescription, additionalInfo, username]);
         res.redirect('/');
     } catch (err) {
         console.error('Error inserting into the database:', err.stack);
@@ -94,8 +96,10 @@ router.get('/history', async (req, res) => {
         return res.redirect('/login');
     }
 
+    const username = req.session.username;
+
     try {
-        const result = await db.query('SELECT * FROM submissions ORDER BY date DESC');
+        const result = await db.query('SELECT * FROM submissions WHERE username = $1 ORDER BY date DESC', [username]);
         res.render('history', { isLoggedIn: req.session.isLoggedIn, submissions: result.rows });
     } catch (err) {
         console.error('Error querying the database:', err.stack);
