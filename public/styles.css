@@ -107,9 +107,8 @@ form {
     text-align: left;
     background-color: #1a252f; /* Darker Blue for form background */
     padding: 20px;
-    border: 1px solid #34495e; /* Darker Gray for border */
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     margin-top: 20px;
     width: 90%; /* Default width for mobile devices */
     max-width: 600px; /* Maximum width for larger displays */
