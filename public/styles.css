@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -43,17 +45,20 @@ nav ul li a:hover {
 
 nav .logo {
     padding: 14px 20px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
+    font-family: 'Dancing Script', cursive;
 }
 
 nav .logo a {
-    color: #ecf0f1; /* Light Gray for text */
+    color: #ecf0f1;
     text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 nav .logo a:hover {
-    color: #ecf0f1; /* Light Gray for text */
+    color: #3498db;
+    transition: color 0.3s ease;
 }
 
 .button-link {
