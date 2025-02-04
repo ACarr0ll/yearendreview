@@ -56,6 +56,19 @@ nav .logo a:hover {
     color: #ecf0f1; /* Light Gray for text */
 }
 
+.button-link {
+    background-color: #2ecc71; /* Green for button background */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button-link:hover {
+    background-color: #27ae60; /* Darker Green for hover */
+}
+
 header {
     color: #ecf0f1; /* Light Gray for header text */
     padding: 20px;
