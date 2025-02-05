@@ -316,6 +316,43 @@ td .delete-button {
     background-color: #c0392b;
 }
 
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.edit-form, .delete-form {
+    background: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    width: auto;
+    display: inline;
+}
+
+.edit-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-button:hover {
+    background-color: #2980b9;
+}
+
+td .delete-button, td .edit-button {
+    position: static;
+    width: auto;
+    margin: 0;
+    padding: 8px 16px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     nav ul {
