@@ -377,6 +377,52 @@ td .delete-button, td .edit-button {
     padding: 8px 16px;
 }
 
+.filter-container {
+    margin: 20px;
+}
+
+.date-filter {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    width: auto;
+    display: inline-block;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-group input[type="date"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #34495e;
+    background-color: #1a252f;
+    color: #ecf0f1;
+}
+
+.filter-group button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: auto;
+}
+
+.clear-filter {
+    color: #e74c3c;
+    text-decoration: none;
+    padding: 8px 16px;
+}
+
+.clear-filter:hover {
+    text-decoration: underline;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     nav ul {

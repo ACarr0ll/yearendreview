@@ -99,13 +99,32 @@ router.get('/history', async (req, res) => {
 
     const username = req.session.username;
     const successMessage = req.session.successMessage;
-    delete req.session.successMessage; // Clear the success message after displaying it
+    delete req.session.successMessage;
+
+    const { startDate } = req.query;
+    let query = 'SELECT * FROM submissions WHERE username = $1';
+    const queryParams = [username];
+
+    if (startDate) {
+        query += ' AND DATE(date) = $2';
+        queryParams.push(startDate);
+    } else {
+        query += ' AND DATE(date) = CURRENT_DATE';
+    }
+
+    query += ' ORDER BY date DESC';
 
     try {
-        const result = await db.query('SELECT * FROM submissions WHERE username = $1 ORDER BY date DESC', [username]);
-        res.render('history', { isLoggedIn: req.session.isLoggedIn, isAdmin: req.session.isAdmin, submissions: result.rows, successMessage });
+        const result = await db.query(query, queryParams);
+        res.render('history', { 
+            isLoggedIn: req.session.isLoggedIn, 
+            isAdmin: req.session.isAdmin, 
+            submissions: result.rows,
+            successMessage,
+            currentDate: new Date().toISOString().split('T')[0]
+        });
     } catch (err) {
-        console.error('Error querying the database:', err.stack);
+        console.error('Error:', err.stack);
         res.status(500).send('Internal Server Error');
     }
 });
