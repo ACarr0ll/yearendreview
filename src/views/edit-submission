@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Submission</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
+    <header>
+        <h1>Edit Submission</h1>
+    </header>
+    <main>
+        <form action="/edit-submission" method="POST">
+            <input type="hidden" name="id" value="<%= submission.id %>">
+            <div>
+                <label for="date">Date:</label>
+                <input type="datetime-local" id="date" name="date" value="<%= new Date(submission.date).toISOString().slice(0, 16) %>" required>
+            </div>
+            <div>
+                <label for="type">Type:</label>
+                <select id="type" name="type" required onchange="toggleAdditionalFields()">
+                    <option value="">Select a type...</option>
+                    <option value="Case" <%= submission.type === 'Case' ? 'selected' : '' %>>Case</option>
+                    <option value="Assistance" <%= submission.type === 'Assistance' ? 'selected' : '' %>>Assistance</option>
+                    <option value="Project" <%= submission.type === 'Project' ? 'selected' : '' %>>Project</option>
+                </select>
+            </div>
+            <div id="caseNumberField" style="display: <%= submission.type === 'Case' ? 'block' : 'none' %>;">
+                <label for="caseNumber">Case Number: *</label>
+                <input type="text" id="caseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number" value="<%= submission.case_number || '' %>" <%= submission.type === 'Case' ? 'required' : '' %>>
+            </div>
+            <div id="analystField" style="display: <%= submission.type === 'Assistance' ? 'block' : 'none' %>;">
+                <label for="analyst">Analyst: *</label>
+                <input type="text" id="analyst" name="analyst" value="<%= submission.analyst || '' %>" <%= submission.type === 'Assistance' ? 'required' : '' %>>
+            </div>
+            <div>
+                <label for="shortDescription">Short Description:</label>
+                <input type="text" id="shortDescription" name="shortDescription" value="<%= submission.short_description %>" required>
+            </div>
+            <div>
+                <label for="additionalInfo">Additional Information:</label>
+                <textarea id="additionalInfo" name="additionalInfo"><%= submission.additional_info %></textarea>
+            </div>
+            <div class="button-row">
+                <button type="submit">Update</button>
+                <a href="/history" class="cancel-button">Cancel</a>
+            </div>
+        </form>
+    </main>
+    <script>
+    function toggleAdditionalFields() {
+        const typeSelect = document.getElementById('type');
+        const caseNumberField = document.getElementById('caseNumberField');
+        const analystField = document.getElementById('analystField');
+        const caseNumberInput = document.getElementById('caseNumber');
+        const analystInput = document.getElementById('analyst');
+        
+        if (typeSelect.value === 'Case') {
+            caseNumberField.style.display = 'block';
+            analystField.style.display = 'none';
+            caseNumberInput.required = true;
+            analystInput.required = false;
+            analystInput.value = '';
+        } else if (typeSelect.value === 'Assistance') {
+            caseNumberField.style.display = 'none';
+            analystField.style.display = 'block';
+            caseNumberInput.required = false;
+            analystInput.required = true;
+            caseNumberInput.value = '';
+        } else {
+            caseNumberField.style.display = 'none';
+            analystField.style.display = 'none';
+            caseNumberInput.required = false;
+            analystInput.required = false;
+            caseNumberInput.value = '';
+            analystInput.value = '';
+        }
+    }
+    </script>
+</body>
+</html>

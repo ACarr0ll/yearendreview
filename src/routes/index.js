@@ -80,14 +80,21 @@ router.get('/submission', (req, res) => {
 });
 
 router.post('/submission', async (req, res) => {
-    const { date, type, shortDescription, additionalInfo } = req.body;
+    const { date, type, caseNumber, analyst, shortDescription, additionalInfo } = req.body;
     const username = req.session.username;
 
     try {
-        await db.query('INSERT INTO submissions (date, type, short_description, additional_info, username) VALUES ($1, $2, $3, $4, $5)', [date, type, shortDescription, additionalInfo, username]);
-        res.redirect('/');
+        await db.query(
+            `INSERT INTO submissions 
+            (date, type, case_number, analyst, short_description, additional_info, username) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            [date, type, type === 'Case' ? caseNumber : null, 
+             type === 'Assistance' ? analyst : null,
+             shortDescription, additionalInfo, username]
+        );
+        res.redirect('/history');
     } catch (err) {
-        console.error('Error inserting into the database:', err.stack);
+        console.error('Error:', err.stack);
         res.status(500).send('Internal Server Error');
     }
 });

@@ -512,3 +512,19 @@ td .delete-button, td .edit-button {
     background-color: #1a252f;
     color: #ecf0f1;
 }
+
+input:required, select:required {
+    border-left: 3px solid #e74c3c;
+}
+
+input:required:valid, select:required:valid {
+    border-left: 3px solid #2ecc71;
+}
+
+#caseNumberField input:required, #analystField input:required {
+    border-left: 3px solid #e74c3c;
+}
+
+#caseNumberField input:required:valid, #analystField input:required:valid {
+    border-left: 3px solid #2ecc71;
+}
