@@ -76,7 +76,17 @@ router.get('/submission', (req, res) => {
     if (!req.session.isLoggedIn) {
         return res.redirect('/login');
     }
-    res.render('submission', { isLoggedIn: req.session.isLoggedIn });
+
+    // Get current date and time
+    const now = new Date();
+    const currentDate = now.toISOString().split('T')[0];
+    const currentTime = now.toTimeString().slice(0, 5);
+
+    res.render('submission', { 
+        isLoggedIn: req.session.isLoggedIn,
+        currentDate: currentDate,
+        currentTime: currentTime
+    });
 });
 
 router.post('/submission', async (req, res) => {
