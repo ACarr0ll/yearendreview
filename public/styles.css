@@ -383,48 +383,49 @@ td .delete-button, td .edit-button {
 }
 
 .filter-container {
-    margin: 20px;
+    margin: 20px auto;
+    max-width: 900px;
 }
 
 .date-filter {
     background: none;
     box-shadow: none;
     padding: 0;
-    width: auto;
-    display: inline-block;
+    width: 100%;
+    margin: 0;
 }
 
 .filter-group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: nowrap;
 }
 
-.filter-group input[type="date"] {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #34495e;
-    background-color: #1a252f;
-    color: #ecf0f1;
+.filter-group label {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.filter-group select,
+.filter-group input[type="date"],
+#monthFilter,
+#dayFilter {
+    min-width: 150px;
+    margin: 0;
+    display: inline-block;
 }
 
 .filter-group button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 16px;
-    cursor: pointer;
-    width: auto;
+    margin: 0;
+    white-space: nowrap;
+    min-width: 100px;
 }
 
-.filter-group select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #34495e;
-    background-color: #1a252f;
-    color: #ecf0f1;
-    margin-right: 10px;
+.clear-filter {
+    margin: 0;
+    white-space: nowrap;
 }
 
 #monthFilter select {
