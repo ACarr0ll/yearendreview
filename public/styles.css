@@ -560,3 +560,20 @@ table td:nth-child(4) { /* Analyst column */
 .date-time-group input {
     width: 100%;
 }
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #34495e;
+    border-radius: 5px;
+    background-color: #1a252f;
+    color: #ecf0f1;
+}
+
+/* Remove spinner buttons for number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

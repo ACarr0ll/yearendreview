@@ -48,6 +48,14 @@
                 <label for="additionalInfo">Additional Information:</label>
                 <textarea id="additionalInfo" name="additionalInfo" rows="4" required></textarea>
             </div>
+            <div>
+                <label for="timeTaken">Time Taken (minutes):</label>
+                <input type="number" 
+                       id="timeTaken" 
+                       name="timeTaken" 
+                       min="0" 
+                       required>
+            </div>
             <div class="button-row">
                 <button type="submit">Submit</button>
                 <button type="button" class="cancel-button" onclick="window.location.href='/'">Cancel</button>

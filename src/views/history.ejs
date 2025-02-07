@@ -61,6 +61,7 @@
                         <th>Analyst</th>
                         <th>Description</th>
                         <th>Additional Info</th>
+                        <th>Time (min)</th>
                         <% if (isAdmin) { %>
                             <th>Actions</th>
                         <% } %>
@@ -75,6 +76,7 @@
                             <td><%= submission.analyst || '-' %></td>
                             <td><%= submission.short_description %></td>
                             <td><%= submission.additional_info %></td>
+                            <td><%= submission.time_taken || '-' %></td>
                             <% if (isAdmin) { %>
                                 <td class="action-buttons">
                                     <form action="/edit-submission" method="GET" class="edit-form">
