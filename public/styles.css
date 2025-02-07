@@ -427,6 +427,10 @@ td .delete-button, td .edit-button {
     margin-right: 10px;
 }
 
+#monthFilter select {
+    min-width: 120px;
+}
+
 .clear-filter {
     color: #e74c3c;
     text-decoration: none;

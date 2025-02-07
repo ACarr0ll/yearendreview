@@ -101,16 +101,16 @@ router.get('/history', async (req, res) => {
     const successMessage = req.session.successMessage;
     delete req.session.successMessage;
 
-    const { startDate, filterType } = req.query;
+    const { startDate, monthDate, filterType } = req.query;
     let query = 'SELECT * FROM submissions WHERE username = $1';
     const queryParams = [username];
 
-    if (startDate) {
-        if (filterType === 'month') {
-            query += ' AND DATE_TRUNC(\'month\', date) = DATE_TRUNC(\'month\', $2::date)';
-        } else {
-            query += ' AND DATE(date) = $2';
-        }
+    if (filterType === 'month' && monthDate) {
+        const year = new Date().getFullYear();
+        query += ' AND DATE_TRUNC(\'month\', date) = DATE_TRUNC(\'month\', $2::date)';
+        queryParams.push(`${year}-${monthDate}-01`);
+    } else if (startDate) {
+        query += ' AND DATE(date) = $2';
         queryParams.push(startDate);
     } else {
         query += ' AND DATE(date) = CURRENT_DATE';
