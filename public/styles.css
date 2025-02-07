@@ -547,3 +547,16 @@ table td:nth-child(4) { /* Analyst column */
     min-width: 100px;
     text-align: center;
 }
+
+.date-time-group {
+    display: flex;
+    gap: 15px;
+}
+
+.date-time-group > div {
+    flex: 1;
+}
+
+.date-time-group input {
+    width: 100%;
+}

@@ -13,9 +13,15 @@
     </header>
     <main>
         <form action="/submission" method="POST">
-            <div>
-                <label for="date">Date:</label>
-                <input type="datetime-local" id="date" name="date" required>
+            <div class="date-time-group">
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" value="<%= currentDate %>" required>
+                </div>
+                <div>
+                    <label for="time">Time:</label>
+                    <input type="time" id="time" name="time" value="<%= currentTime %>" required>
+                </div>
             </div>
             <div>
                 <label for="type">Type:</label>

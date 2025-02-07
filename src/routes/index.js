@@ -80,15 +80,19 @@ router.get('/submission', (req, res) => {
 });
 
 router.post('/submission', async (req, res) => {
-    const { date, type, caseNumber, analyst, shortDescription, additionalInfo } = req.body;
+    const { date, time, type, caseNumber, analyst, shortDescription, additionalInfo } = req.body;
     const username = req.session.username;
+
+    // Combine date and time into a single timestamp
+    const dateTime = new Date(`${date}T${time}`);
 
     try {
         await db.query(
             `INSERT INTO submissions 
             (date, type, case_number, analyst, short_description, additional_info, username) 
             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-            [date, type, type === 'Case' ? caseNumber : null, 
+            [dateTime, type, 
+             type === 'Case' ? caseNumber : null,
              type === 'Assistance' ? analyst : null,
              shortDescription, additionalInfo, username]
         );
