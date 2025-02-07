@@ -528,3 +528,22 @@ input:required:valid, select:required:valid {
 #caseNumberField input:required:valid, #analystField input:required:valid {
     border-left: 3px solid #2ecc71;
 }
+
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #34495e;
+}
+
+/* Add dash for empty cells */
+table td:empty::after {
+    content: "-";
+    color: #666;
+}
+
+/* Optional: Style specific columns */
+table td:nth-child(3), /* Case Number column */
+table td:nth-child(4) { /* Analyst column */
+    min-width: 100px;
+    text-align: center;
+}
