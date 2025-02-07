@@ -140,6 +140,23 @@ form input, form select, form textarea {
     color: #ecf0f1; /* Light Gray for text */
 }
 
+form select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #34495e;
+    border-radius: 5px;
+    background-color: #1a252f;
+    color: #ecf0f1;
+    cursor: pointer;
+}
+
+form select option {
+    background-color: #1a252f;
+    color: #ecf0f1;
+    padding: 8px;
+}
+
 form button {
     width: 100%;
     padding: 10px;
@@ -474,4 +491,24 @@ td .delete-button, td .edit-button {
         width: 60%; /* Increase width for larger displays */
         max-width: 800px; /* Maximum width for larger displays */
     }
+}
+
+#caseNumberField input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #34495e;
+    border-radius: 5px;
+    background-color: #1a252f;
+    color: #ecf0f1;
+}
+
+#analystField input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #34495e;
+    border-radius: 5px;
+    background-color: #1a252f;
+    color: #ecf0f1;
 }
