@@ -27,13 +27,19 @@
                     <option value="Project" <%= submission.type === 'Project' ? 'selected' : '' %>>Project</option>
                 </select>
             </div>
-            <div id="caseNumberField" style="display: none;">
+            <div id="caseNumberField" style="display: <%= submission.type === 'Case' ? 'block' : 'none' %>;">
                 <label for="caseNumber">Case Number: *</label>
-                <input type="text" id="caseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number">
+                <input type="text" id="caseNumber" name="caseNumber" 
+                       pattern="[0-9]+" 
+                       title="Please enter a valid case number" 
+                       value="<%= submission.case_number || '' %>"
+                       <%= submission.type === 'Case' ? 'required' : '' %>>
             </div>
-            <div id="analystField" style="display: none;">
+            <div id="analystField" style="display: <%= submission.type === 'Assistance' ? 'block' : 'none' %>;">
                 <label for="analyst">Analyst: *</label>
-                <input type="text" id="analyst" name="analyst">
+                <input type="text" id="analyst" name="analyst" 
+                       value="<%= submission.analyst || '' %>"
+                       <%= submission.type === 'Assistance' ? 'required' : '' %>>
             </div>
             <div>
                 <label for="shortDescription">Short Description:</label>
@@ -59,7 +65,7 @@
         document.getElementById('type').value = currentType;
         if (currentType === 'Case') {
             document.getElementById('caseNumberField').style.display = 'block';
-            document.getElementById('caseNumber').value = caseNumber;
+            document.getElementById('caseNumber').value = caseNumber || '';
             document.getElementById('caseNumber').required = true;
         } else if (currentType === 'Assistance') {
             document.getElementById('analystField').style.display = 'block';
