@@ -184,12 +184,27 @@ router.post('/edit-submission', async (req, res) => {
         return res.status(403).send('Forbidden');
     }
 
-    const { id, date, type, shortDescription, additionalInfo } = req.body;
+    const { id, date, type, caseNumber, analyst, shortDescription, additionalInfo } = req.body;
 
     try {
         await db.query(
-            'UPDATE submissions SET date = $1, type = $2, short_description = $3, additional_info = $4 WHERE id = $5',
-            [date, type, shortDescription, additionalInfo, id]
+            `UPDATE submissions 
+            SET date = $1, 
+                type = $2, 
+                case_number = $3,
+                analyst = $4,
+                short_description = $5, 
+                additional_info = $6 
+            WHERE id = $7`,
+            [
+                date, 
+                type, 
+                type === 'Case' ? caseNumber : null,
+                type === 'Assistance' ? analyst : null,
+                shortDescription, 
+                additionalInfo, 
+                id
+            ]
         );
         req.session.successMessage = 'Submission updated successfully!';
         res.redirect('/history');
