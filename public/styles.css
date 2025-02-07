@@ -74,6 +74,11 @@ nav .logo a:hover {
     background-color: #27ae60; /* Darker Green for hover */
 }
 
+.button-link.small {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
 header {
     color: #ecf0f1; /* Light Gray for header text */
     padding: 20px;
@@ -411,6 +416,15 @@ td .delete-button, td .edit-button {
     padding: 8px 16px;
     cursor: pointer;
     width: auto;
+}
+
+.filter-group select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #34495e;
+    background-color: #1a252f;
+    color: #ecf0f1;
+    margin-right: 10px;
 }
 
 .clear-filter {

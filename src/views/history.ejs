@@ -19,7 +19,11 @@
         <div class="filter-container">
             <form action="/history" method="GET" class="date-filter">
                 <div class="filter-group">
-                    <label for="startDate">Filter by Date:</label>
+                    <label for="filterType">View by:</label>
+                    <select id="filterType" name="filterType">
+                        <option value="day">Day</option>
+                        <option value="month">Month</option>
+                    </select>
                     <input type="date" id="startDate" name="startDate" value="<%= currentDate %>">
                     <button type="submit">Apply Filter</button>
                     <a href="/history" class="clear-filter">Clear Filter</a>
