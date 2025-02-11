@@ -147,6 +147,10 @@ router.get('/history', async (req, res) => {
     const successMessage = req.session.successMessage;
     delete req.session.successMessage;
 
+    // Get filter parameters
+    const filterType = req.query.filterType || 'day';
+    const currentDate = new Date().toISOString().split('T')[0];
+
     try {
         // Get submissions and total time
         const submissionsResult = await db.query(
@@ -165,7 +169,9 @@ router.get('/history', async (req, res) => {
             isAdmin: req.session.isAdmin,
             submissions: submissionsResult.rows,
             totalTime: submissionsResult.rows[0]?.total_time || 0,
-            successMessage
+            successMessage,
+            filterType,        // Add filterType to template data
+            currentDate        // Add currentDate to template data
         });
     } catch (err) {
         console.error('Error:', err.stack);
