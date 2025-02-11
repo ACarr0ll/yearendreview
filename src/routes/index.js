@@ -226,20 +226,21 @@ router.post('/edit-submission', async (req, res) => {
     const { id, date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
 
     try {
-        // Validate date and time
+        // Validate date and time inputs
         if (!date || !time) {
-            throw new Error('Invalid date or time');
+            throw new Error('Date and time are required');
         }
 
-        // Create date object and adjust for timezone
-        const dateTime = new Date(`${date}T${time}`);
+        // Format date and time properly
+        const [year, month, day] = date.split('-');
+        const [hours, minutes] = time.split(':');
+        
+        // Create date object using local timezone
+        const dateTime = new Date(year, month - 1, day, hours, minutes);
+        
         if (isNaN(dateTime.getTime())) {
-            throw new Error('Invalid date/time format');
+            throw new Error(`Invalid date/time: ${date} ${time}`);
         }
-
-        // Adjust for timezone
-        const timezoneOffset = dateTime.getTimezoneOffset();
-        dateTime.setMinutes(dateTime.getMinutes() + timezoneOffset);
 
         await db.query(
             `UPDATE submissions 
@@ -258,7 +259,7 @@ router.post('/edit-submission', async (req, res) => {
                 type === 'Assistance' ? analyst : null,
                 shortDescription, 
                 additionalInfo,
-                timeTaken || 0, // Default to 0 if not provided
+                parseInt(timeTaken) || 0,
                 id
             ]
         );
