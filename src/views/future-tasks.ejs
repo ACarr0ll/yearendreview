@@ -54,6 +54,58 @@
             </div>
         </div>
 
+        <div id="taskModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Complete Task</h2>
+                <form action="/submission" method="POST" id="completeTaskForm">
+                    <div class="date-time-group">
+                        <div>
+                            <label for="date">Date:</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div>
+                            <label for="time">Time:</label>
+                            <input type="time" id="time" name="time" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="type">Type:</label>
+                        <select id="type" name="type" required onchange="toggleAdditionalFields()">
+                            <option value="Case">Case</option>
+                            <option value="Assistance">Assistance</option>
+                            <option value="Project">Project</option>
+                        </select>
+                    </div>
+                    <div id="caseNumberField" style="display: none;">
+                        <label for="caseNumber">Case Number: *</label>
+                        <input type="text" id="caseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number">
+                    </div>
+                    <div id="analystField" style="display: none;">
+                        <label for="analyst">Analyst: *</label>
+                        <input type="text" id="analyst" name="analyst">
+                    </div>
+                    <div>
+                        <label for="shortDescription">Short Description:</label>
+                        <input type="text" id="shortDescription" name="shortDescription" required>
+                    </div>
+                    <div>
+                        <label for="additionalInfo">Additional Information:</label>
+                        <textarea id="additionalInfo" name="additionalInfo"></textarea>
+                    </div>
+                    <div>
+                        <label for="timeTaken">Time Taken (minutes):</label>
+                        <input type="number" id="timeTaken" name="timeTaken" min="0" required>
+                    </div>
+                    <input type="hidden" id="taskId" name="taskId">
+                    <div class="button-row">
+                        <button type="submit">Complete Task</button>
+                        <button type="button" class="cancel-button" onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="tasks-list">
             <% tasks.forEach(task => { %>
                 <div class="task-card">
@@ -124,6 +176,7 @@
                     taskDiv.className = `task-item priority-${task.priority.toLowerCase()}`;
                     taskDiv.textContent = task.title;
                     taskDiv.title = task.description || 'No description';
+                    taskDiv.onclick = () => openTaskModal(task);
                     dayDiv.appendChild(taskDiv);
                 });
 
@@ -143,6 +196,37 @@
 
         // Initial render
         document.addEventListener('DOMContentLoaded', renderCalendar);
+
+        function openTaskModal(task) {
+            const modal = document.getElementById('taskModal');
+            const form = document.getElementById('completeTaskForm');
+            
+            // Set current date and time
+            const now = new Date();
+            document.getElementById('date').value = now.toISOString().split('T')[0];
+            document.getElementById('time').value = now.toTimeString().slice(0,5);
+            
+            // Populate form with task data
+            document.getElementById('shortDescription').value = task.title;
+            document.getElementById('additionalInfo').value = task.description || '';
+            document.getElementById('taskId').value = task.id;
+            
+            // Show modal
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('taskModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('taskModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
