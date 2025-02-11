@@ -678,6 +678,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .task-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 0.9em;
     margin: 25px 5px 5px 5px;
     padding: 5px;
@@ -686,9 +690,28 @@ input[type="number"]::-webkit-outer-spin-button {
     cursor: pointer;
 }
 
-.priority-high { border-left: 3px solid #e74c3c; }
-.priority-medium { border-left: 3px solid #f39c12; }
-.priority-low { border-left: 3px solid #2ecc71; }
+.task-content {
+    flex-grow: 1;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task-delete {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #e74c3c;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.task-delete:hover {
+    color: #c0392b;
+}
 
 /* Modal Styles */
 .modal {

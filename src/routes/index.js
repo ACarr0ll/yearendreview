@@ -312,6 +312,26 @@ router.post('/future-tasks', async (req, res) => {
     }
 });
 
+router.post('/delete-task', async (req, res) => {
+    if (!req.session.isLoggedIn) {
+        return res.status(403).json({ error: 'Not authorized' });
+    }
+
+    const { taskId } = req.body;
+    const username = req.session.username;
+
+    try {
+        await db.query(
+            'DELETE FROM future_tasks WHERE id = $1 AND username = $2',
+            [taskId, username]
+        );
+        res.json({ success: true });
+    } catch (err) {
+        console.error('Error:', err.stack);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = (app) => {
     app.use('/', router);
 };
