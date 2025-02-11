@@ -237,8 +237,11 @@
             const modal = document.getElementById('taskModal');
             const typeSelect = document.getElementById('type');
             
-            // Set current date and time
+            // Set current date and time with timezone adjustment
             const now = new Date();
+            const timezoneOffset = now.getTimezoneOffset();
+            now.setMinutes(now.getMinutes() - timezoneOffset); // Subtract offset to get local time
+            
             document.getElementById('date').value = now.toISOString().split('T')[0];
             document.getElementById('time').value = now.toTimeString().slice(0,5);
             

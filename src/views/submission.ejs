@@ -66,17 +66,22 @@
         <p>&copy; 2023 My Node.js Website</p>
     </footer>
     <script>
-        // Set the date input field to the current date and time in the user's local time zone
         document.addEventListener('DOMContentLoaded', (event) => {
-            const dateInput = document.getElementById('date');
+            // Set current date and time with timezone adjustment
             const now = new Date();
+            const timezoneOffset = now.getTimezoneOffset();
+            now.setMinutes(now.getMinutes() - timezoneOffset); // Subtract offset to get local time
+            
+            // Format date and time
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const localDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-            dateInput.value = localDateTime;
+            
+            // Set values
+            document.getElementById('date').value = `${year}-${month}-${day}`;
+            document.getElementById('time').value = `${hours}:${minutes}`;
         });
 
         function toggleAdditionalFields() {
