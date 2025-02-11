@@ -18,23 +18,26 @@ router.post('/login', async (req, res) => {
     const lowerCaseUsername = username.toLowerCase();
 
     try {
-        const result = await db.query('SELECT * FROM users WHERE LOWER(username) = $1', [lowerCaseUsername]);
+        const result = await db.query('SELECT * FROM users WHERE username = $1', [lowerCaseUsername]);
+        
         if (result.rows.length > 0) {
             const user = result.rows[0];
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (isMatch) {
+            const isValid = await bcrypt.compare(password, user.password);
+            
+            if (isValid) {
                 req.session.isLoggedIn = true;
-                req.session.username = username; // Store the username in the session
-                req.session.isAdmin = user.is_admin; // Store the admin status in the session
-                res.redirect('/');
+                req.session.username = lowerCaseUsername; // Ensure username is stored
+                req.session.isAdmin = user.is_admin || false;
+                console.log('Session after login:', req.session); // Debug log
+                res.redirect('/history');
             } else {
-                res.render('login', { error: 'Incorrect username or password', isLoggedIn: req.session.isLoggedIn });
+                res.render('login', { error: 'Invalid username or password', isLoggedIn: false });
             }
         } else {
-            res.render('login', { error: 'Incorrect username or password', isLoggedIn: req.session.isLoggedIn });
+            res.render('login', { error: 'Invalid username or password', isLoggedIn: false });
         }
     } catch (err) {
-        console.error('Error querying the database:', err.stack);
+        console.error('Error:', err.stack);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -256,6 +259,8 @@ router.post('/future-tasks', async (req, res) => {
 
     const { title, description, dueDate, priority } = req.body;
     const username = req.session.username;
+    
+    console.log('Current user:', username); // Debug log
 
     try {
         // First verify user exists
@@ -263,12 +268,13 @@ router.post('/future-tasks', async (req, res) => {
             'SELECT username FROM users WHERE username = $1',
             [username]
         );
+        
+        console.log('User check result:', userCheck.rows); // Debug log
 
         if (userCheck.rows.length === 0) {
-            throw new Error('User not found');
+            throw new Error(`User not found: ${username}`);
         }
 
-        // Then insert the task
         await db.query(
             `INSERT INTO future_tasks (title, description, due_date, priority, username)
              VALUES ($1, $2, $3, $4, $5)`,
@@ -277,7 +283,10 @@ router.post('/future-tasks', async (req, res) => {
         res.redirect('/future-tasks');
     } catch (err) {
         console.error('Error:', err.stack);
-        res.status(500).send('Internal Server Error');
+        res.status(500).render('error', { 
+            error: 'Failed to create task. Please try logging in again.',
+            isLoggedIn: req.session.isLoggedIn 
+        });
     }
 });
 

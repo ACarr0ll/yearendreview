@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
+    <main>
+        <div class="error-container">
+            <h1>Error</h1>
+            <p><%= error %></p>
+            <a href="/" class="button-link">Return to Home</a>
+        </div>
+    </main>
+</body>
+</html>
