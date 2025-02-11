@@ -229,6 +229,47 @@ router.post('/edit-submission', async (req, res) => {
     }
 });
 
+router.get('/future-tasks', async (req, res) => {
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/login');
+    }
+
+    try {
+        const result = await db.query(
+            'SELECT * FROM future_tasks WHERE username = $1 ORDER BY due_date ASC',
+            [req.session.username]
+        );
+        res.render('future-tasks', { 
+            isLoggedIn: req.session.isLoggedIn,
+            tasks: result.rows
+        });
+    } catch (err) {
+        console.error('Error:', err.stack);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/future-tasks', async (req, res) => {
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/login');
+    }
+
+    const { title, description, dueDate, priority } = req.body;
+    const username = req.session.username;
+
+    try {
+        await db.query(
+            `INSERT INTO future_tasks (title, description, due_date, priority, username)
+             VALUES ($1, $2, $3, $4, $5)`,
+            [title, description, dueDate, priority, username]
+        );
+        res.redirect('/future-tasks');
+    } catch (err) {
+        console.error('Error:', err.stack);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports = (app) => {
     app.use('/', router);
 };

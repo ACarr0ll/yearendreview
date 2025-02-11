@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Tasks</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
+    <header>
+        <h1>Future Tasks</h1>
+    </header>
+    <main>
+        <form action="/future-tasks" method="POST" class="task-form">
+            <div>
+                <label for="title">Task Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <div>
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" name="dueDate" required>
+            </div>
+            <div>
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <div class="tasks-list">
+            <% tasks.forEach(task => { %>
+                <div class="task-card">
+                    <h3><%= task.title %></h3>
+                    <p><%= task.description %></p>
+                    <div class="task-meta">
+                        <span>Due: <%= new Date(task.due_date).toLocaleDateString() %></span>
+                        <span class="priority-<%= task.priority.toLowerCase() %>">
+                            Priority: <%= task.priority %>
+                        </span>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+</body>
+</html>
