@@ -71,31 +71,46 @@
                     </div>
                     <div>
                         <label for="type">Type:</label>
-                        <select id="type" name="type" required onchange="toggleAdditionalFields()">
+                        <select id="type" name="type" required onchange="toggleModalFields()">
+                            <option value="">Select a type...</option>
                             <option value="Case">Case</option>
                             <option value="Assistance">Assistance</option>
                             <option value="Project">Project</option>
                         </select>
                     </div>
-                    <div id="caseNumberField" style="display: none;">
-                        <label for="caseNumber">Case Number: *</label>
-                        <input type="text" id="caseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number">
+                    <div id="modalCaseNumberField" style="display: none;">
+                        <label for="modalCaseNumber">Case Number: *</label>
+                        <input type="text" 
+                               id="modalCaseNumber" 
+                               name="caseNumber" 
+                               pattern="[0-9]+" 
+                               title="Please enter a valid case number">
                     </div>
-                    <div id="analystField" style="display: none;">
-                        <label for="analyst">Analyst: *</label>
-                        <input type="text" id="analyst" name="analyst">
+                    <div id="modalAnalystField" style="display: none;">
+                        <label for="modalAnalyst">Analyst: *</label>
+                        <input type="text" 
+                               id="modalAnalyst" 
+                               name="analyst">
                     </div>
                     <div>
                         <label for="shortDescription">Short Description:</label>
-                        <input type="text" id="shortDescription" name="shortDescription" required>
+                        <input type="text" 
+                               id="shortDescription" 
+                               name="shortDescription" 
+                               required>
                     </div>
                     <div>
                         <label for="additionalInfo">Additional Information:</label>
-                        <textarea id="additionalInfo" name="additionalInfo"></textarea>
+                        <textarea id="additionalInfo" 
+                                 name="additionalInfo"></textarea>
                     </div>
                     <div>
                         <label for="timeTaken">Time Taken (minutes):</label>
-                        <input type="number" id="timeTaken" name="timeTaken" min="0" required>
+                        <input type="number" 
+                               id="timeTaken" 
+                               name="timeTaken" 
+                               min="0" 
+                               required>
                     </div>
                     <input type="hidden" id="taskId" name="taskId">
                     <div class="button-row">
@@ -226,6 +241,13 @@
             if (event.target == modal) {
                 closeModal();
             }
+        }
+
+        function toggleModalFields() {
+            const typeSelect = document.getElementById('type');
+            const caseNumberField = document.getElementById('modalCaseNumberField');
+            const analystField = document.getElementById('modalAnalystField');
+            const caseNumberInput = document.getElementById('modalCaseNumber');
         }
     </script>
 </body>
