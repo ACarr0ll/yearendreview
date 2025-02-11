@@ -67,21 +67,20 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            // Set current date and time with timezone adjustment
+            // Get current date and time in local timezone
             const now = new Date();
-            const timezoneOffset = now.getTimezoneOffset();
-            now.setMinutes(now.getMinutes() - timezoneOffset); // Subtract offset to get local time
             
-            // Format date and time
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
+            // Format date in YYYY-MM-DD
+            const date = now.toLocaleDateString('en-CA');
+            
+            // Format time in HH:mm
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
+            const time = `${hours}:${minutes}`;
             
-            // Set values
-            document.getElementById('date').value = `${year}-${month}-${day}`;
-            document.getElementById('time').value = `${hours}:${minutes}`;
+            // Set form values
+            document.getElementById('date').value = date;
+            document.getElementById('time').value = time;
         });
 
         function toggleAdditionalFields() {

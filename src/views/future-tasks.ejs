@@ -237,13 +237,14 @@
             const modal = document.getElementById('taskModal');
             const typeSelect = document.getElementById('type');
             
-            // Set current date and time with timezone adjustment
+            // Set current date and time without timezone adjustment
             const now = new Date();
-            const timezoneOffset = now.getTimezoneOffset();
-            now.setMinutes(now.getMinutes() - timezoneOffset); // Subtract offset to get local time
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
             
-            document.getElementById('date').value = now.toISOString().split('T')[0];
-            document.getElementById('time').value = now.toTimeString().slice(0,5);
+            // Set values using local time components
+            document.getElementById('date').value = now.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+            document.getElementById('time').value = `${hours}:${minutes}`;
             
             // Populate form with task data
             document.getElementById('shortDescription').value = task.title;
