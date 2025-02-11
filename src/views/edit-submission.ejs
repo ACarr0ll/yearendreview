@@ -55,8 +55,9 @@
                        id="timeTaken" 
                        name="timeTaken" 
                        min="0" 
-                       value="<%= typeof submission.time_taken !== 'undefined' ? submission.time_taken : 0 %>"
-                       required>
+                       value="<%= submission.time_taken %>"
+                       required
+                       oninput="validateTimeTaken(this)">
             </div>
             <div class="button-row">
                 <button type="submit">Update</button>
@@ -109,6 +110,16 @@
             analystInput.required = false;
             caseNumberInput.value = '';
             analystInput.value = '';
+        }
+    }
+
+    function validateTimeTaken(input) {
+        // Remove any non-numeric characters
+        input.value = input.value.replace(/[^0-9]/g, '');
+        
+        // Ensure value is not negative
+        if (input.value < 0) {
+            input.value = 0;
         }
     }
     </script>

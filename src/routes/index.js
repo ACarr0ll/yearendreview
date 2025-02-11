@@ -223,43 +223,31 @@ router.post('/edit-submission', async (req, res) => {
         return res.status(403).send('Forbidden');
     }
 
-    const { id, date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
+    const { id, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
 
     try {
-        // Validate date and time inputs
-        if (!date || !time) {
-            throw new Error('Date and time are required');
-        }
-
-        // Format date and time properly
-        const [year, month, day] = date.split('-');
-        const [hours, minutes] = time.split(':');
-        
-        // Create date object using local timezone
-        const dateTime = new Date(year, month - 1, day, hours, minutes);
-        
-        if (isNaN(dateTime.getTime())) {
-            throw new Error(`Invalid date/time: ${date} ${time}`);
+        // Validate time taken
+        const parsedTimeTaken = parseInt(timeTaken) || 0;
+        if (parsedTimeTaken < 0) {
+            throw new Error('Time taken cannot be negative');
         }
 
         await db.query(
             `UPDATE submissions 
-            SET date = $1, 
-                type = $2, 
-                case_number = $3,
-                analyst = $4,
-                short_description = $5, 
-                additional_info = $6,
-                time_taken = $7
-            WHERE id = $8`,
+            SET type = $1, 
+                case_number = $2,
+                analyst = $3,
+                short_description = $4, 
+                additional_info = $5,
+                time_taken = $6
+            WHERE id = $7`,
             [
-                dateTime, 
                 type, 
                 type === 'Case' ? caseNumber : null,
                 type === 'Assistance' ? analyst : null,
                 shortDescription, 
                 additionalInfo,
-                parseInt(timeTaken) || 0,
+                parsedTimeTaken,
                 id
             ]
         );
@@ -268,7 +256,7 @@ router.post('/edit-submission', async (req, res) => {
         res.redirect('/history');
     } catch (err) {
         console.error('Error:', err.stack);
-        res.status(500).send(`Internal Server Error: ${err.message}`);
+        res.status(500).send(`Error updating submission: ${err.message}`);
     }
 });
 
