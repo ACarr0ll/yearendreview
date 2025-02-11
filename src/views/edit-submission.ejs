@@ -55,7 +55,7 @@
                        id="timeTaken" 
                        name="timeTaken" 
                        min="0" 
-                       value="<%= submission.time_taken %>"
+                       value="<%= typeof submission.time_taken !== 'undefined' ? submission.time_taken : 0 %>"
                        required>
             </div>
             <div class="button-row">
