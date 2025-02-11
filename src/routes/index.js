@@ -242,6 +242,7 @@ router.get('/future-tasks', async (req, res) => {
             'SELECT * FROM future_tasks WHERE username = $1 ORDER BY due_date ASC',
             [req.session.username]
         );
+        
         res.render('future-tasks', { 
             isLoggedIn: req.session.isLoggedIn,
             tasks: result.rows
