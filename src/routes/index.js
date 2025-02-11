@@ -226,7 +226,21 @@ router.post('/edit-submission', async (req, res) => {
     const { id, date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
 
     try {
+        // Validate date and time
+        if (!date || !time) {
+            throw new Error('Invalid date or time');
+        }
+
+        // Create date object and adjust for timezone
         const dateTime = new Date(`${date}T${time}`);
+        if (isNaN(dateTime.getTime())) {
+            throw new Error('Invalid date/time format');
+        }
+
+        // Adjust for timezone
+        const timezoneOffset = dateTime.getTimezoneOffset();
+        dateTime.setMinutes(dateTime.getMinutes() + timezoneOffset);
+
         await db.query(
             `UPDATE submissions 
             SET date = $1, 
@@ -244,7 +258,7 @@ router.post('/edit-submission', async (req, res) => {
                 type === 'Assistance' ? analyst : null,
                 shortDescription, 
                 additionalInfo,
-                timeTaken, 
+                timeTaken || 0, // Default to 0 if not provided
                 id
             ]
         );
@@ -253,7 +267,7 @@ router.post('/edit-submission', async (req, res) => {
         res.redirect('/history');
     } catch (err) {
         console.error('Error:', err.stack);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send(`Internal Server Error: ${err.message}`);
     }
 });
 
