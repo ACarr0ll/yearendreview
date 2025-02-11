@@ -210,7 +210,14 @@
         }
 
         // Initial render
-        document.addEventListener('DOMContentLoaded', renderCalendar);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener for close button
+            const closeButton = document.querySelector('.close-modal');
+            closeButton.addEventListener('click', closeModal);
+
+            // Initial render
+            renderCalendar();
+        });
 
         function openTaskModal(task) {
             const modal = document.getElementById('taskModal');
@@ -235,7 +242,24 @@
 
         function closeModal() {
             const modal = document.getElementById('taskModal');
+            const form = document.getElementById('completeTaskForm');
+            
+            // Reset form
+            form.reset();
+            
+            // Hide modal
             modal.style.display = 'none';
+            
+            // Reset required fields and visibility
+            const caseNumberField = document.getElementById('modalCaseNumberField');
+            const analystField = document.getElementById('modalAnalystField');
+            const caseNumberInput = document.getElementById('modalCaseNumber');
+            const analystInput = document.getElementById('modalAnalyst');
+            
+            caseNumberField.style.display = 'none';
+            analystField.style.display = 'none';
+            caseNumberInput.required = false;
+            analystInput.required = false;
         }
 
         // Close modal when clicking outside
