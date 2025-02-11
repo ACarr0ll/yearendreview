@@ -147,32 +147,25 @@ router.get('/history', async (req, res) => {
     const successMessage = req.session.successMessage;
     delete req.session.successMessage;
 
-    const { startDate, monthDate, filterType } = req.query;
-    let query = 'SELECT * FROM submissions WHERE username = $1';
-    const queryParams = [username];
-
-    if (filterType === 'month' && monthDate) {
-        const year = new Date().getFullYear();
-        query += ' AND DATE_TRUNC(\'month\', date) = DATE_TRUNC(\'month\', $2::date)';
-        queryParams.push(`${year}-${monthDate}-01`);
-    } else if (startDate) {
-        query += ' AND DATE(date) = $2';
-        queryParams.push(startDate);
-    } else {
-        query += ' AND DATE(date) = CURRENT_DATE';
-    }
-
-    query += ' ORDER BY date DESC';
-
     try {
-        const result = await db.query(query, queryParams);
-        res.render('history', { 
-            isLoggedIn: req.session.isLoggedIn, 
-            isAdmin: req.session.isAdmin, 
-            submissions: result.rows,
-            successMessage,
-            currentDate: new Date().toISOString().split('T')[0],
-            filterType: filterType || 'day'
+        // Get submissions and total time
+        const submissionsResult = await db.query(
+            `SELECT *, 
+                    (SELECT SUM(time_taken) 
+                     FROM submissions 
+                     WHERE username = $1) as total_time
+             FROM submissions 
+             WHERE username = $1 
+             ORDER BY date DESC`, 
+            [username]
+        );
+
+        res.render('history', {
+            isLoggedIn: req.session.isLoggedIn,
+            isAdmin: req.session.isAdmin,
+            submissions: submissionsResult.rows,
+            totalTime: submissionsResult.rows[0]?.total_time || 0,
+            successMessage
         });
     } catch (err) {
         console.error('Error:', err.stack);

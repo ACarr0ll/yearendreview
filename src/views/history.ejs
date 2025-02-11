@@ -52,6 +52,13 @@
             </form>
         </div>
         <div class="table-container">
+            <div class="summary-section">
+                <div class="total-time">
+                    <strong>Total Time:</strong> 
+                    <span><%= totalTime %> minutes</span>
+                    <span class="time-in-hours">(<%= Math.floor(totalTime / 60) %>h <%= totalTime % 60 %>m)</span>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>
