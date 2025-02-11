@@ -93,13 +93,23 @@ router.get('/submission', (req, res) => {
 });
 
 router.post('/submission', async (req, res) => {
-    const { date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/login');
+    }
+
+    const { date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken, taskId } = req.body;
     const username = req.session.username;
 
     // Combine date and time into a single timestamp
     const dateTime = new Date(`${date}T${time}`);
+    const timezoneOffset = dateTime.getTimezoneOffset();
+    dateTime.setMinutes(dateTime.getMinutes() + timezoneOffset);
 
     try {
+        // Start a transaction
+        await db.query('BEGIN');
+
+        // Insert the submission
         await db.query(
             `INSERT INTO submissions 
             (date, type, case_number, analyst, short_description, additional_info, time_taken, username) 
@@ -110,8 +120,19 @@ router.post('/submission', async (req, res) => {
              shortDescription, additionalInfo, 
              timeTaken, username]
         );
+
+        // If this was from a future task, mark it as completed
+        if (taskId) {
+            await db.query(
+                'UPDATE future_tasks SET status = $1 WHERE id = $2 AND username = $3',
+                ['Completed', taskId, username]
+            );
+        }
+
+        await db.query('COMMIT');
         res.redirect('/history');
     } catch (err) {
+        await db.query('ROLLBACK');
         console.error('Error:', err.stack);
         res.status(500).send('Internal Server Error');
     }
