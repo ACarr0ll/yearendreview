@@ -258,6 +258,17 @@ router.post('/future-tasks', async (req, res) => {
     const username = req.session.username;
 
     try {
+        // First verify user exists
+        const userCheck = await db.query(
+            'SELECT username FROM users WHERE username = $1',
+            [username]
+        );
+
+        if (userCheck.rows.length === 0) {
+            throw new Error('User not found');
+        }
+
+        // Then insert the task
         await db.query(
             `INSERT INTO future_tasks (title, description, due_date, priority, username)
              VALUES ($1, $2, $3, $4, $5)`,
