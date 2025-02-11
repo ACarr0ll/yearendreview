@@ -223,9 +223,10 @@ router.post('/edit-submission', async (req, res) => {
         return res.status(403).send('Forbidden');
     }
 
-    const { id, date, type, caseNumber, analyst, shortDescription, additionalInfo } = req.body;
+    const { id, date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
 
     try {
+        const dateTime = new Date(`${date}T${time}`);
         await db.query(
             `UPDATE submissions 
             SET date = $1, 
@@ -233,18 +234,21 @@ router.post('/edit-submission', async (req, res) => {
                 case_number = $3,
                 analyst = $4,
                 short_description = $5, 
-                additional_info = $6 
-            WHERE id = $7`,
+                additional_info = $6,
+                time_taken = $7
+            WHERE id = $8`,
             [
-                date, 
+                dateTime, 
                 type, 
                 type === 'Case' ? caseNumber : null,
                 type === 'Assistance' ? analyst : null,
                 shortDescription, 
-                additionalInfo, 
+                additionalInfo,
+                timeTaken, 
                 id
             ]
         );
+        
         req.session.successMessage = 'Submission updated successfully!';
         res.redirect('/history');
     } catch (err) {

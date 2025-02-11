@@ -49,6 +49,15 @@
                 <label for="additionalInfo">Additional Information:</label>
                 <textarea id="additionalInfo" name="additionalInfo"><%= submission.additional_info %></textarea>
             </div>
+            <div>
+                <label for="timeTaken">Time Taken (minutes):</label>
+                <input type="number" 
+                       id="timeTaken" 
+                       name="timeTaken" 
+                       min="0" 
+                       value="<%= submission.time_taken %>"
+                       required>
+            </div>
             <div class="button-row">
                 <button type="submit">Update</button>
                 <a href="/history" class="cancel-button">Cancel</a>
