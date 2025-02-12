@@ -912,3 +912,25 @@ input[type="number"]::-webkit-outer-spin-button {
 .print-button i {
     font-size: 16px;
 }
+
+.export-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.export-button:hover {
+    background-color: #2980b9;
+}
+
+.export-button i {
+    font-size: 16px;
+}

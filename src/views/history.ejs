@@ -57,6 +57,12 @@
                 <span>Print Report</span>
             </button>
         </div>
+        <div class="actions-bar">
+            <button type="button" class="export-button" onclick="exportToCSV()">
+                <i class="fas fa-file-csv"></i>
+                <span>Export to CSV</span>
+            </button>
+        </div>
         <div class="table-container">
             <div class="summary-section">
                 <div class="total-time">
@@ -129,6 +135,36 @@
             dayFilter.style.display = 'none';
             monthFilter.style.display = 'inline-block';
         }
+    }
+
+    function exportToCSV() {
+        const submissions = <%- JSON.stringify(submissions) %>;
+        let csvContent = "Date,Type,Case Number,Analyst,Description,Additional Info,Time Taken\n";
+        
+        submissions.forEach(submission => {
+            const date = new Date(submission.date).toLocaleDateString();
+            const row = [
+                date,
+                submission.type,
+                submission.case_number || '',
+                submission.analyst || '',
+                submission.short_description,
+                submission.additional_info || '',
+                submission.time_taken
+            ].map(cell => `"${cell}"`).join(',');
+            
+            csvContent += row + '\n';
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute("href", url);
+        link.setAttribute("download", `submissions_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
     </script>
 </body>
