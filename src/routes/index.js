@@ -149,20 +149,53 @@ router.get('/history', async (req, res) => {
 
     // Get filter parameters
     const filterType = req.query.filterType || 'day';
+    const startDate = req.query.startDate;
+    const monthDate = req.query.monthDate;
     const currentDate = new Date().toISOString().split('T')[0];
 
     try {
-        // Get submissions and total time
-        const submissionsResult = await db.query(
-            `SELECT *, 
+        let query;
+        let params = [username];
+
+        if (filterType === 'day' && startDate) {
+            query = `
+                SELECT *, 
+                    (SELECT SUM(time_taken) 
+                     FROM submissions 
+                     WHERE username = $1 
+                     AND DATE(date) = $2) as total_time
+                FROM submissions 
+                WHERE username = $1 
+                AND DATE(date) = $2
+                ORDER BY date DESC
+            `;
+            params.push(startDate);
+        } else if (filterType === 'month' && monthDate) {
+            query = `
+                SELECT *, 
+                    (SELECT SUM(time_taken) 
+                     FROM submissions 
+                     WHERE username = $1 
+                     AND DATE_TRUNC('month', date) = DATE_TRUNC('month', $2::date)) as total_time
+                FROM submissions 
+                WHERE username = $1 
+                AND DATE_TRUNC('month', date) = DATE_TRUNC('month', $2::date)
+                ORDER BY date DESC
+            `;
+            params.push(`${monthDate}-01`);
+        } else {
+            query = `
+                SELECT *, 
                     (SELECT SUM(time_taken) 
                      FROM submissions 
                      WHERE username = $1) as total_time
-             FROM submissions 
-             WHERE username = $1 
-             ORDER BY date DESC`, 
-            [username]
-        );
+                FROM submissions 
+                WHERE username = $1 
+                ORDER BY date DESC
+            `;
+        }
+
+        const submissionsResult = await db.query(query, params);
 
         res.render('history', {
             isLoggedIn: req.session.isLoggedIn,
@@ -170,8 +203,8 @@ router.get('/history', async (req, res) => {
             submissions: submissionsResult.rows,
             totalTime: submissionsResult.rows[0]?.total_time || 0,
             successMessage,
-            filterType,        // Add filterType to template data
-            currentDate        // Add currentDate to template data
+            filterType,
+            currentDate
         });
     } catch (err) {
         console.error('Error:', err.stack);

@@ -17,37 +17,28 @@
             <div class="success"><%= successMessage %></div>
         <% } %>
         <div class="filter-container">
-            <form action="/history" method="GET" class="date-filter">
+            <form action="/history" method="GET" class="filter-form">
                 <div class="filter-group">
-                    <label for="filterType">View by:</label>
                     <select id="filterType" name="filterType" onchange="toggleDateFilter()">
                         <option value="day" <%= filterType === 'day' ? 'selected' : '' %>>Day</option>
                         <option value="month" <%= filterType === 'month' ? 'selected' : '' %>>Month</option>
                     </select>
                     
                     <div id="dayFilter" style="<%= filterType === 'month' ? 'display:none;' : '' %>">
-                        <input type="date" id="startDate" name="startDate" value="<%= currentDate %>">
+                        <input type="date" 
+                               id="startDate" 
+                               name="startDate" 
+                               value="<%= currentDate %>">
                     </div>
                     
                     <div id="monthFilter" style="<%= filterType === 'month' ? '' : 'display:none;' %>">
-                        <select name="monthDate" id="monthDate">
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">August</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
+                        <input type="month" 
+                               id="monthDate" 
+                               name="monthDate" 
+                               value="<%= currentDate.substring(0, 7) %>">
                     </div>
                     
-                    <button type="submit">Apply Filter</button>
-                    <a href="/history" class="clear-filter">Clear Filter</a>
+                    <button type="submit" class="filter-button">Apply Filter</button>
                 </div>
             </form>
         </div>
