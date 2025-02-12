@@ -775,3 +775,106 @@ input[type="number"]::-webkit-outer-spin-button {
 .close-modal:hover {
     color: #ecf0f1;
 }
+
+/* Print styles */
+@media print {
+    /* Hide non-printable elements */
+    .navbar,
+    .filter-container,
+    .action-buttons,
+    .edit-form,
+    .delete-form,
+    .print-button {
+        display: none !important;
+    }
+
+    /* Format table for printing */
+    .table-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: left;
+    }
+
+    /* Override dark theme for printing */
+    body {
+        background: white;
+        color: black;
+    }
+
+    table {
+        background: white;
+    }
+
+    th, td {
+        background: white;
+        color: black;
+    }
+
+    .summary-section {
+        background: white;
+        color: black;
+        border: 1px solid #000;
+        margin-bottom: 20px;
+    }
+
+    .total-time {
+        color: black;
+    }
+
+    .time-in-hours {
+        color: #666;
+    }
+
+    /* Add page breaks appropriately */
+    tr {
+        page-break-inside: avoid;
+    }
+
+    /* Add print header */
+    @page {
+        margin: 2cm;
+    }
+
+    .print-header {
+        display: block !important;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+/* Regular styles */
+.print-button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.print-button:hover {
+    background-color: #27ae60;
+}
+
+.print-header {
+    display: none;
+}
+
+.action-buttons {
+    margin: 20px 0;
+    text-align: right;
+}
