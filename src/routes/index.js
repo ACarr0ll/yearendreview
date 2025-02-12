@@ -147,53 +147,29 @@ router.get('/history', async (req, res) => {
     const successMessage = req.session.successMessage;
     delete req.session.successMessage;
 
-    // Get filter parameters
+    // Get filter parameters or default to today
     const filterType = req.query.filterType || 'day';
-    const startDate = req.query.startDate;
-    const monthDate = req.query.monthDate;
     const currentDate = new Date().toISOString().split('T')[0];
+    const startDate = req.query.startDate || currentDate;
+    const monthDate = req.query.monthDate || currentDate.substring(0, 7);
 
     try {
         let query;
         let params = [username];
 
-        if (filterType === 'day' && startDate) {
-            query = `
-                SELECT *, 
-                    (SELECT SUM(time_taken) 
-                     FROM submissions 
-                     WHERE username = $1 
-                     AND DATE(date) = $2) as total_time
-                FROM submissions 
-                WHERE username = $1 
-                AND DATE(date) = $2
-                ORDER BY date DESC
-            `;
-            params.push(startDate);
-        } else if (filterType === 'month' && monthDate) {
-            query = `
-                SELECT *, 
-                    (SELECT SUM(time_taken) 
-                     FROM submissions 
-                     WHERE username = $1 
-                     AND DATE_TRUNC('month', date) = DATE_TRUNC('month', $2::date)) as total_time
-                FROM submissions 
-                WHERE username = $1 
-                AND DATE_TRUNC('month', date) = DATE_TRUNC('month', $2::date)
-                ORDER BY date DESC
-            `;
-            params.push(`${monthDate}-01`);
-        } else {
-            query = `
-                SELECT *, 
-                    (SELECT SUM(time_taken) 
-                     FROM submissions 
-                     WHERE username = $1) as total_time
-                FROM submissions 
-                WHERE username = $1 
-                ORDER BY date DESC
-            `;
-        }
+        // Default to today's submissions
+        query = `
+            SELECT *, 
+                (SELECT SUM(time_taken) 
+                 FROM submissions 
+                 WHERE username = $1 
+                 AND DATE(date) = $2) as total_time
+            FROM submissions 
+            WHERE username = $1 
+            AND DATE(date) = $2
+            ORDER BY date DESC
+        `;
+        params.push(startDate);
 
         const submissionsResult = await db.query(query, params);
 
@@ -204,7 +180,9 @@ router.get('/history', async (req, res) => {
             totalTime: submissionsResult.rows[0]?.total_time || 0,
             successMessage,
             filterType,
-            currentDate
+            currentDate,
+            startDate,
+            monthDate
         });
     } catch (err) {
         console.error('Error:', err.stack);

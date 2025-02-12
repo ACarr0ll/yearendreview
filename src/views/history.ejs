@@ -28,14 +28,14 @@
                         <input type="date" 
                                id="startDate" 
                                name="startDate" 
-                               value="<%= currentDate %>">
+                               value="<%= startDate %>">
                     </div>
                     
                     <div id="monthFilter" style="<%= filterType === 'month' ? '' : 'display:none;' %>">
                         <input type="month" 
                                id="monthDate" 
                                name="monthDate" 
-                               value="<%= currentDate.substring(0, 7) %>">
+                               value="<%= monthDate %>">
                     </div>
                     
                     <button type="submit" class="filter-button">Apply Filter</button>
