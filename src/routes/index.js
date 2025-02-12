@@ -147,7 +147,7 @@ router.get('/history', async (req, res) => {
     const successMessage = req.session.successMessage;
     delete req.session.successMessage;
 
-    // Get filter parameters or default to today
+    // Get filter parameters
     const filterType = req.query.filterType || 'day';
     const currentDate = new Date().toISOString().split('T')[0];
     const startDate = req.query.startDate || currentDate;
@@ -157,19 +157,35 @@ router.get('/history', async (req, res) => {
         let query;
         let params = [username];
 
-        // Default to today's submissions
-        query = `
-            SELECT *, 
-                (SELECT SUM(time_taken) 
-                 FROM submissions 
-                 WHERE username = $1 
-                 AND DATE(date) = $2) as total_time
-            FROM submissions 
-            WHERE username = $1 
-            AND DATE(date) = $2
-            ORDER BY date DESC
-        `;
-        params.push(startDate);
+        if (filterType === 'month' && monthDate) {
+            // For month filter, use DATE_TRUNC to compare months
+            query = `
+                SELECT *, 
+                    (SELECT SUM(time_taken) 
+                     FROM submissions 
+                     WHERE username = $1 
+                     AND TO_CHAR(date, 'YYYY-MM') = $2) as total_time
+                FROM submissions 
+                WHERE username = $1 
+                AND TO_CHAR(date, 'YYYY-MM') = $2
+                ORDER BY date DESC
+            `;
+            params.push(monthDate);
+        } else {
+            // Default to day filter
+            query = `
+                SELECT *, 
+                    (SELECT SUM(time_taken) 
+                     FROM submissions 
+                     WHERE username = $1 
+                     AND DATE(date) = $2) as total_time
+                FROM submissions 
+                WHERE username = $1 
+                AND DATE(date) = $2
+                ORDER BY date DESC
+            `;
+            params.push(startDate);
+        }
 
         const submissionsResult = await db.query(query, params);
 
