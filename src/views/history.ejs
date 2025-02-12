@@ -9,6 +9,15 @@
 </head>
 <body>
     <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
+    <div class="print-header">
+        <h1>Submission History</h1>
+        <p>Generated on: <%= new Date().toLocaleDateString() %></p>
+        <% if (filterType === 'day') { %>
+            <p>Date: <%= startDate %></p>
+        <% } else { %>
+            <p>Month: <%= monthDate %></p>
+        <% } %>
+    </div>
     <header>
         <h1>Submission History</h1>
     </header>
@@ -41,6 +50,12 @@
                     <button type="submit" class="filter-button">Apply Filter</button>
                 </div>
             </form>
+        </div>
+        <div class="actions-bar">
+            <button type="button" class="print-button" onclick="window.print()">
+                <i class="fas fa-print"></i>
+                <span>Print Report</span>
+            </button>
         </div>
         <div class="table-container">
             <div class="summary-section">

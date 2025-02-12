@@ -851,6 +851,11 @@ input[type="number"]::-webkit-outer-spin-button {
         text-align: center;
         margin-bottom: 20px;
     }
+
+    .actions-bar,
+    .print-button {
+        display: none !important;
+    }
 }
 
 /* Regular styles */
@@ -877,4 +882,33 @@ input[type="number"]::-webkit-outer-spin-button {
 .action-buttons {
     margin: 20px 0;
     text-align: right;
+}
+
+.actions-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px;
+    padding: 10px;
+}
+
+.print-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.print-button:hover {
+    background-color: #27ae60;
+}
+
+.print-button i {
+    font-size: 16px;
 }
