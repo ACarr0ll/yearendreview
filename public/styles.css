@@ -5,6 +5,9 @@ body {
     color: #ecf0f1; /* Light Gray for text */
     background-color: #2c3e50; /* Dark Gray for background */
     text-align: center; /* Center all text */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 nav {
@@ -87,7 +90,12 @@ header h1 {
 }
 
 main {
+    flex: 1;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: 0 auto;
 }
 
 .feature-box {
@@ -273,8 +281,8 @@ footer {
     padding: 5px; /* Make the footer smaller */
     width: 100%;
     font-size: 12px; /* Smaller font size for the footer */
-    position: fixed; /* Keep the footer fixed at the bottom */
-    bottom: 0; /* Align the footer to the bottom */
+    position: static; /* Change from fixed to static */
+    margin-top: auto;
 }
 
 /* Notification Styles */
@@ -296,8 +304,12 @@ footer {
 }
 
 .table-container {
-    margin: 20px;
+    flex: 1;
+    margin: 0;
     overflow-x: auto;
+    background-color: #1a252f;
+    border-radius: 8px;
+    padding: 15px;
 }
 
 table {
@@ -306,6 +318,8 @@ table {
     background-color: #1a252f;
     border-radius: 10px;
     overflow: hidden;
+    table-layout: fixed;
+    margin-bottom: 20px; /* Add space above footer */
 }
 
 th, td {
@@ -396,7 +410,7 @@ td .delete-button, td .edit-button {
 }
 
 .filter-container {
-    margin: 20px 0;
+    margin: 0 0 20px 0;
     padding: 15px;
     background-color: #2c3e50;
     border-radius: 5px;
