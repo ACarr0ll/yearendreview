@@ -16,7 +16,19 @@
             <input type="hidden" name="id" value="<%= submission.id %>">
             <div>
                 <label for="date">Date:</label>
-                <input type="datetime-local" id="date" name="date" value="<%= new Date(submission.date).toISOString().slice(0, 16) %>" required>
+                <input type="date" 
+                       id="date" 
+                       name="date" 
+                       value="<%= new Date(submission.date).toISOString().split('T')[0] %>" 
+                       required>
+            </div>
+            <div>
+                <label for="time">Time:</label>
+                <input type="time" 
+                       id="time" 
+                       name="time" 
+                       value="<%= new Date(submission.date).toTimeString().slice(0,5) %>" 
+                       required>
             </div>
             <div>
                 <label for="type">Type:</label>

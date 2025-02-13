@@ -249,31 +249,35 @@ router.post('/edit-submission', async (req, res) => {
         return res.status(403).send('Forbidden');
     }
 
-    const { id, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
+    const { id, date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
 
     try {
-        // Validate time taken
-        const parsedTimeTaken = parseInt(timeTaken) || 0;
-        if (parsedTimeTaken < 0) {
-            throw new Error('Time taken cannot be negative');
+        // Create date object from form inputs
+        const dateTime = new Date(`${date}T${time}`);
+        
+        // Validate the date
+        if (isNaN(dateTime.getTime())) {
+            throw new Error('Invalid date/time format');
         }
 
         await db.query(
             `UPDATE submissions 
-            SET type = $1, 
-                case_number = $2,
-                analyst = $3,
-                short_description = $4, 
-                additional_info = $5,
-                time_taken = $6
-            WHERE id = $7`,
+            SET date = $1,
+                type = $2, 
+                case_number = $3,
+                analyst = $4,
+                short_description = $5, 
+                additional_info = $6,
+                time_taken = $7
+            WHERE id = $8`,
             [
+                dateTime,
                 type, 
                 type === 'Case' ? caseNumber : null,
                 type === 'Assistance' ? analyst : null,
                 shortDescription, 
                 additionalInfo,
-                parsedTimeTaken,
+                parseInt(timeTaken) || 0,
                 id
             ]
         );
