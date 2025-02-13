@@ -34,34 +34,26 @@
                     </select>
                     
                     <div id="dayFilter" style="<%= filterType === 'month' ? 'display:none;' : '' %>">
-                        <input type="date" 
-                               id="startDate" 
-                               name="startDate" 
-                               value="<%= startDate %>">
+                        <input type="date" id="startDate" name="startDate" value="<%= startDate %>">
                     </div>
                     
                     <div id="monthFilter" style="<%= filterType === 'month' ? '' : 'display:none;' %>">
-                        <input type="month" 
-                               id="monthDate" 
-                               name="monthDate" 
-                               value="<%= currentDate.substring(0, 7) %>">
+                        <input type="month" id="monthDate" name="monthDate" value="<%= monthDate %>">
                     </div>
                     
                     <button type="submit" class="filter-button">Apply Filter</button>
+
+                    <button type="button" class="print-button" onclick="window.print()">
+                        <i class="fas fa-print"></i>
+                        <span>Print Report</span>
+                    </button>
+
+                    <button type="button" class="export-button" onclick="exportToCSV()">
+                        <i class="fas fa-file-csv"></i>
+                        <span>Export to CSV</span>
+                    </button>
                 </div>
             </form>
-        </div>
-        <div class="actions-bar">
-            <button type="button" class="print-button" onclick="window.print()">
-                <i class="fas fa-print"></i>
-                <span>Print Report</span>
-            </button>
-        </div>
-        <div class="actions-bar">
-            <button type="button" class="export-button" onclick="exportToCSV()">
-                <i class="fas fa-file-csv"></i>
-                <span>Export to CSV</span>
-            </button>
         </div>
         <div class="table-container">
             <div class="summary-section">
