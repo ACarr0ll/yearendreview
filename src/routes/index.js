@@ -106,6 +106,12 @@ router.post('/submission', async (req, res) => {
     dateTime.setMinutes(dateTime.getMinutes() + timezoneOffset);
 
     try {
+        // Validate submission type
+        const validTypes = ['Case', 'Assistance', 'Project', 'Meeting'];
+        if (!validTypes.includes(type)) {
+            throw new Error('Invalid submission type');
+        }
+
         // Start a transaction
         await db.query('BEGIN');
 
@@ -252,6 +258,12 @@ router.post('/edit-submission', async (req, res) => {
     const { id, date, time, type, caseNumber, analyst, shortDescription, additionalInfo, timeTaken } = req.body;
 
     try {
+        // Validate submission type
+        const validTypes = ['Case', 'Assistance', 'Project', 'Meeting'];
+        if (!validTypes.includes(type)) {
+            throw new Error('Invalid submission type');
+        }
+
         // Create date object from form inputs
         const dateTime = new Date(`${date}T${time}`);
         

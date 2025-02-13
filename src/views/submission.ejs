@@ -30,15 +30,16 @@
                     <option value="Case">Case</option>
                     <option value="Assistance">Assistance</option>
                     <option value="Project">Project</option>
+                    <option value="Meeting">Meeting</option>
                 </select>
             </div>
-            <div id="caseNumberField" style="display: none;">
-                <label for="caseNumber">Case Number: *</label>
-                <input type="text" id="caseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number" required>
+            <div id="modalCaseNumberField" style="display: none;">
+                <label for="modalCaseNumber">Case Number: *</label>
+                <input type="text" id="modalCaseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number" required>
             </div>
-            <div id="analystField" style="display: none;">
-                <label for="analyst">Analyst: *</label>
-                <input type="text" id="analyst" name="analyst" required>
+            <div id="modalAnalystField" style="display: none;">
+                <label for="modalAnalyst">Analyst: *</label>
+                <input type="text" id="modalAnalyst" name="analyst" required>
             </div>
             <div>
                 <label for="shortDescription">Short Description:</label>
@@ -85,30 +86,30 @@
 
         function toggleAdditionalFields() {
             const typeSelect = document.getElementById('type');
-            const caseNumberField = document.getElementById('caseNumberField');
-            const analystField = document.getElementById('analystField');
-            const caseNumberInput = document.getElementById('caseNumber');
-            const analystInput = document.getElementById('analyst');
+            const caseNumberField = document.getElementById('modalCaseNumberField');
+            const analystField = document.getElementById('modalAnalystField');
+            const caseNumberInput = document.getElementById('modalCaseNumber');
+            const analystInput = document.getElementById('modalAnalyst');
             
-            if (typeSelect.value === 'Case') {
-                caseNumberField.style.display = 'block';
-                analystField.style.display = 'none';
-                caseNumberInput.required = true;
-                analystInput.required = false;
-                analystInput.value = '';
-            } else if (typeSelect.value === 'Assistance') {
-                caseNumberField.style.display = 'none';
-                analystField.style.display = 'block';
-                caseNumberInput.required = false;
-                analystInput.required = true;
-                caseNumberInput.value = '';
-            } else {
-                caseNumberField.style.display = 'none';
-                analystField.style.display = 'none';
-                caseNumberInput.required = false;
-                analystInput.required = false;
-                caseNumberInput.value = '';
-                analystInput.value = '';
+            // Hide all fields initially
+            caseNumberField.style.display = 'none';
+            analystField.style.display = 'none';
+            caseNumberInput.required = false;
+            analystInput.required = false;
+            
+            // Show relevant fields based on type
+            switch(typeSelect.value) {
+                case 'Case':
+                    caseNumberField.style.display = 'block';
+                    caseNumberInput.required = true;
+                    break;
+                case 'Assistance':
+                    analystField.style.display = 'block';
+                    analystInput.required = true;
+                    break;
+                case 'Meeting':
+                    // No additional fields required for meetings
+                    break;
             }
         }
     </script>
