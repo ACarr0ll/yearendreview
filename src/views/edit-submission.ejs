@@ -37,6 +37,7 @@
                     <option value="Case" <%= submission.type === 'Case' ? 'selected' : '' %>>Case</option>
                     <option value="Assistance" <%= submission.type === 'Assistance' ? 'selected' : '' %>>Assistance</option>
                     <option value="Project" <%= submission.type === 'Project' ? 'selected' : '' %>>Project</option>
+                    <option value="Meeting" <%= submission.type === 'Meeting' ? 'selected' : '' %>>Meeting</option>
                 </select>
             </div>
             <div id="caseNumberField" style="display: <%= submission.type === 'Case' ? 'block' : 'none' %>;">
@@ -79,23 +80,6 @@
     </main>
 
     <script>
-    window.onload = function() {
-        const currentType = '<%= submission.type %>';
-        const caseNumber = '<%= submission.case_number %>';
-        const analyst = '<%= submission.analyst %>';
-        
-        document.getElementById('type').value = currentType;
-        if (currentType === 'Case') {
-            document.getElementById('caseNumberField').style.display = 'block';
-            document.getElementById('caseNumber').value = caseNumber || '';
-            document.getElementById('caseNumber').required = true;
-        } else if (currentType === 'Assistance') {
-            document.getElementById('analystField').style.display = 'block';
-            document.getElementById('analyst').value = analyst;
-            document.getElementById('analyst').required = true;
-        }
-    };
-
     function toggleAdditionalFields() {
         const typeSelect = document.getElementById('type');
         const caseNumberField = document.getElementById('caseNumberField');
@@ -103,26 +87,29 @@
         const caseNumberInput = document.getElementById('caseNumber');
         const analystInput = document.getElementById('analyst');
         
-        if (typeSelect.value === 'Case') {
-            caseNumberField.style.display = 'block';
-            analystField.style.display = 'none';
-            caseNumberInput.required = true;
-            analystInput.required = false;
-            analystInput.value = '';
-        } else if (typeSelect.value === 'Assistance') {
-            caseNumberField.style.display = 'none';
-            analystField.style.display = 'block';
-            caseNumberInput.required = false;
-            analystInput.required = true;
-            caseNumberInput.value = '';
-        } else {
-            caseNumberField.style.display = 'none';
-            analystField.style.display = 'none';
-            caseNumberInput.required = false;
-            analystInput.required = false;
-            caseNumberInput.value = '';
-            analystInput.value = '';
+        // Reset all fields
+        caseNumberField.style.display = 'none';
+        analystField.style.display = 'none';
+        caseNumberInput.required = false;
+        analystInput.required = false;
+        
+        // Show relevant fields based on type
+        switch(typeSelect.value) {
+            case 'Case':
+                caseNumberField.style.display = 'block';
+                caseNumberInput.required = true;
+                break;
+            case 'Assistance':
+                analystField.style.display = 'block';
+                analystInput.required = true;
+                break;
+            // Meeting and Project types don't need additional fields
         }
+    }
+
+    // Call on page load to set initial state
+    window.onload = function() {
+        toggleAdditionalFields();
     }
 
     function validateTimeTaken(input) {
