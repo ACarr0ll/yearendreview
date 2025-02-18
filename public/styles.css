@@ -303,13 +303,13 @@ footer {
     opacity: 1;
 }
 
+/* Table container styles */
 .table-container {
-    flex: 1;
-    margin: 0;
-    overflow-x: auto;
+    margin: 20px 0;
     background-color: #1a252f;
     border-radius: 8px;
     padding: 15px;
+    width: 100%;
 }
 
 table {
@@ -322,10 +322,53 @@ table {
     margin-bottom: 20px; /* Add space above footer */
 }
 
+/* Column specific widths */
+th:nth-child(1), td:nth-child(1) { width: 12%; } /* Date */
+th:nth-child(2), td:nth-child(2) { width: 8%; }  /* Type */
+th:nth-child(3), td:nth-child(3) { width: 10%; } /* Case/Analyst */
+th:nth-child(4), td:nth-child(4) { width: 25%; } /* Description */
+th:nth-child(5), td:nth-child(5) { width: 25%; } /* Additional Info */
+th:nth-child(6), td:nth-child(6) { width: 10%; } /* Time Taken */
+th:nth-child(7), td:nth-child(7) { width: 10%; } /* Actions */
+
 th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #34495e;
+    vertical-align: top;
+}
+
+/* Word wrap for content cells */
+td:nth-child(4), /* Description */
+td:nth-child(5) { /* Additional Info */
+    white-space: normal;
+    word-wrap: break-word;
+    min-width: 200px;
+}
+
+/* Keep certain columns from wrapping */
+td:nth-child(1), /* Date */
+td:nth-child(2), /* Type */
+td:nth-child(3), /* Case/Analyst */
+td:nth-child(6), /* Time Taken */
+td:nth-child(7) { /* Actions */
+    white-space: nowrap;
+}
+
+/* Hover effect for better readability */
+tr:hover {
+    background-color: #2c3e50;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    table {
+        min-width: 1000px;
+    }
 }
 
 th {
