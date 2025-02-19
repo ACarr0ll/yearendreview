@@ -324,13 +324,17 @@ th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #34495e;
-    vertical-align: middle; /* Changed from top to middle */
+    vertical-align: middle; /* Default vertical center */
     white-space: normal;
     word-wrap: break-word;
+    line-height: 1.5;
+    /* Enforce a minimum height on all cells */
+    min-height: 50px;
 }
 
 /* Ensure the actions column stays compact */
 td:last-child {
+    vertical-align: bottom;
     white-space: nowrap;
 }
 
