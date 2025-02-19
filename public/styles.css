@@ -391,6 +391,8 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #34495e;
     vertical-align: top;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 /* Word wrap for all cells */
@@ -402,7 +404,6 @@ td {
 /* Action column styling */
 td:last-child {
     white-space: nowrap;
-    width: 1%;
 }
 
 /* Hover effect */
@@ -1083,29 +1084,29 @@ input[type="number"]::-webkit-outer-spin-button {
 table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #34495e;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
-/* Column widths */
-th:nth-child(1), td:nth-child(1) { width: 150px; } /* Date */
-th:nth-child(2), td:nth-child(2) { width: 100px; } /* Type */
-th:nth-child(3), td:nth-child(3) { width: 120px; } /* Case/Analyst */
-th:nth-child(4), td:nth-child(4) { width: 300px; } /* Description */
-th:nth-child(5), td:nth-child(5) { width: 200px; } /* Additional Info */
-th:nth-child(6), td:nth-child(6) { width: 100px; } /* Time Taken */
-th:nth-child(7), td:nth-child(7) { width: 100px; } /* Actions */
+/* Remove all fixed column widths */
+/*
+th:nth-child(1), td:nth-child(1) { width: 150px; }  Date
+th:nth-child(2), td:nth-child(2) { width: 100px; }  Type
+th:nth-child(3), td:nth-child(3) { width: 120px; }  Case/Analyst
+th:nth-child(4), td:nth-child(4) { width: 300px; }  Description
+th:nth-child(5), td:nth-child(5) { width: 200px; }  Additional Info
+th:nth-child(6), td:nth-child(6) { width: 100px; }  Time Taken
+th:nth-child(7), td:nth-child(7) { width: 100px; }  Actions
+*/
 
-@media print {
-    .filter-container {
-        display: none;
-    }
+/* Ensure the actions column stays compact */
+td:last-child {
+    white-space: nowrap;
 }
