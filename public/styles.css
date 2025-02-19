@@ -312,21 +312,26 @@ footer {
     border-radius: 8px;
 }
 
+/* Basic table structure */
 table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
+/* Cell styling */
 th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #34495e;
+    vertical-align: middle; /* Changed from top to middle */
+    white-space: normal;
+    word-wrap: break-word;
 }
 
-th {
-    background-color: #34495e;
-    color: #ecf0f1;
-    font-weight: bold;
+/* Ensure the actions column stays compact */
+td:last-child {
+    white-space: nowrap;
 }
 
 /* Filter Section */
@@ -390,7 +395,7 @@ th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #34495e;
-    vertical-align: top;
+    vertical-align: middle; /* Changed from top to middle */
     white-space: normal;
     word-wrap: break-word;
 }
@@ -401,7 +406,7 @@ td {
     word-wrap: break-word;
 }
 
-/* Action column styling */
+/* Ensure the actions column stays compact */
 td:last-child {
     white-space: nowrap;
 }
