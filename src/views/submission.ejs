@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submission Form</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <%- include('partials/_navbar', { isLoggedIn: isLoggedIn }) %>
@@ -35,15 +36,18 @@
             </div>
             <div id="modalCaseNumberField" style="display: none;">
                 <label for="modalCaseNumber">Case Number: *</label>
-                <input type="text" id="modalCaseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number" required>
+                <input type="text" id="modalCaseNumber" name="caseNumber" pattern="[0-9]+" title="Please enter a valid case number">
             </div>
             <div id="modalAnalystField" style="display: none;">
                 <label for="modalAnalyst">Analyst: *</label>
-                <input type="text" id="modalAnalyst" name="analyst" required>
+                <input type="text" id="modalAnalyst" name="analyst">
             </div>
             <div>
                 <label for="shortDescription">Short Description:</label>
                 <input type="text" id="shortDescription" name="shortDescription" required>
+                <button type="button" onclick="startDictation('shortDescription')" title="Dictate Short Description">
+                    <i class="fas fa-microphone"></i>
+                </button>
             </div>
             <div>
                 <label for="additionalInfo">Additional Information:</label>
@@ -111,6 +115,34 @@
                     // No additional fields required for meetings
                     break;
             }
+        }
+
+        // Dictation functionality using the Web Speech API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognizer = new SpeechRecognition();
+            recognizer.continuous = false;
+            recognizer.interimResults = false;
+            recognizer.lang = 'en-US';
+
+            function startDictation(fieldId) {
+                recognizer.start();
+                recognizer.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    const inputField = document.getElementById(fieldId);
+                    // Append the transcribed text to existing value
+                    inputField.value = inputField.value ? inputField.value + ' ' + transcript : transcript;
+                };
+
+                recognizer.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                };
+            }
+
+            // Expose startDictation to the global scope so it can be used inline
+            window.startDictation = startDictation;
+        } else {
+            console.warn("Your browser does not support the Web Speech API.");
         }
     </script>
 </body>
